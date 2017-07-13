@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>javascript : selector exam2</title>
+<link rel="stylesheet" href="common.css" />
+<script>
+window.onload = function(){
+	var examObj1 = document.getElementsByClassName('exam_wrap')[0];
+	examObj1.getElementsByTagName('button')[0].onclick = function(){
+		var page = examObj1.getElementsByClassName('exam_q')[0];
+		var firstDiv = page.firstElementChild;
+		firstDiv.style.backgroundColor = 'yellow';
+		var nodes = page.childNodes; 
+		for(var i = 0; i < nodes.length; i++){
+			var node = nodes.item(i);
+			if (node.nodeType == 1){
+				var nodeEm = node.firstElementChild;
+				nodeEm.style.backgroundColor = 'yellow';
+			}
+		}
+	};
+	var examObj2 = document.getElementsByClassName('exam_wrap')[1];
+	examObj2.getElementsByTagName('button')[0].onclick = function(){
+		var page = examObj2.getElementsByClassName('exam_q')[0];
+		var lastDiv = page.lastElementChild;
+		lastDiv.style.backgroundColor = 'yellow';
+		var nodes = page.childNodes; 
+		for(var i = 0; i < nodes.length; i++){
+			var node = nodes.item(i);
+			if (node.nodeType == 1){
+				var nodeEm = node.lastElementChild;
+				nodeEm.style.backgroundColor = 'yellow';
+			}
+		}
+	};
+	var examObj3 = document.getElementsByClassName('exam_wrap')[2];
+	examObj3.getElementsByTagName('button')[0].onclick = function(){
+		var examChild = examObj3.getElementsByClassName('exam_q')[0].firstChild;
+		if (examChild.nodeType != 1){
+			examChild = examChild.nextElementSibling;
+			examChild.style.backgroundColor = 'yellow';
+		}
+		// var page = examObj1.getElementsByClassName('exam_q')[0];
+		// var firstDiv = page.firstElementChild;
+		// firstDiv.style.backgroundColor = 'yellow';
+	};
+	var examObj4 = document.getElementsByClassName('exam_wrap')[3];
+	examObj4.getElementsByTagName('button')[0].onclick = function(){
+		var page = examObj4.getElementsByClassName('exam_q')[0];
+		var lastDiv = page.lastElementChild;
+		var nodes = page.childNodes; 
+		for(var i = 0; i < nodes.length; i++){
+			var node = nodes.item(i);
+			if (node.nodeType == 1){
+				var nodeEm = lastDiv.lastElementChild;
+				nodeEm.style.backgroundColor = 'yellow';
+			}
+		}
+	};
+	var examObj5 = document.getElementsByClassName('exam_wrap')[4];
+	examObj5.getElementsByTagName('button')[0].onclick = function(){
+		var page = examObj5.getElementsByClassName('exam_q')[0];
+		var pageElement = page.children;
+		var secondElement = pageElement.item(1);
+		secondElement.style.backgroundColor = 'yellow';
+		for(var i = 0; i < pageElement.length; i++){
+			var divElement = pageElement.item(i);
+			var divSecondElement = divElement.children.item(1);
+			if (divSecondElement != null){
+				divSecondElement.style.backgroundColor = 'yellow';
+			}
+		}
+	};
+	var examObj6 = document.getElementsByClassName('exam_wrap')[5];
+	examObj6.getElementsByTagName('button')[0].onclick = function(){
+		var page = examObj6.getElementsByClassName('exam_q')[0];
+		var pageElement = page.children;
+		var thirdElement = pageElement.item(2);
+		thirdElement.style.backgroundColor = 'yellow';
+		for(var i = 0; i < pageElement.length; i++){
+			var divElement = pageElement.item(i);
+			var divThirdElement = divElement.children.item(2);
+			if (divThirdElement != null){
+				divThirdElement.style.backgroundColor = 'yellow';
+			}
+		}
+	};
+	var examObj7 = document.getElementsByClassName('exam_wrap')[6];
+	examObj7.getElementsByTagName('button')[0].onclick = function(){
+		var page = examObj7.getElementsByClassName('exam_q')[0];
+		var pageElement = page.children;
+		for(var i = 0; i < pageElement.length; i++){
+			var divElement = pageElement.item(i);
+			if (i > 2){
+				divElement.style.backgroundColor = 'yellow';
+			}
+		}
+	};
+	var examObj8 = document.getElementsByClassName('exam_wrap')[7];
+	examObj8.getElementsByTagName('button')[0].onclick = function(){
+		var page = examObj8.getElementsByClassName('exam_q')[0];
+		var pageElement = page.children;
+		for(var i = 0; i < 2; i++){
+			var divElement = pageElement.item(i);
+			divElement.style.backgroundColor = 'yellow';
+		}
+	};
+}
+</script>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. <strong class="point">태그 순서가 첫번째인 모든 Elements</strong>를 선택</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :first / .first()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. <strong class="point">태그 순서가 마지막인 모든 Elements</strong>를 선택</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :last / .last()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. <strong class="point">첫번째 자식 Element</strong>를 선택</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :first-child</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. <strong class="point">마지막 자식 Element</strong>를 선택</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :last-child</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. <strong class="point">태그 순서가 2번째인 자식 Element</strong>를 선택</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2<div>child1</div></div>
+				<div>3<div>child1</div><div>child2</div></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :nth-child(n)</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. <strong class="point">태그 순서가 3번째인 Element</strong>를 선택</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :eq(n) / .eq(n)</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. <strong class="point">태그 순서가 3번째인 Element 이후의 Elements</strong>를 선택</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :gt(n) / .nextAll()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. <strong class="point">태그 순서가 3번째인 Element 이전의 Elements</strong>를 선택</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :lt(n) / .prevAll()</p>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+</body>
+</html>

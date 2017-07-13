@@ -4,38 +4,47 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="robots" content="all">
-<title>{서브} :: {프로젝트명}</title>
-<link rel="stylesheet" type="text/css" href="css/project_name_html5.css">
-<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+<title>JS STUDY INDEX</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,table,th,td,form,fieldset,legend,textarea,input,select,textarea,button,article,aside,dialog,footer,header,section,footer,nav,figure,main{margin:0;padding:0}
+html,body{height:100%}
+body{background:#ddd}
+ul{list-style:none}
+a{color:#333;text-decoration:none}
+.wrap{width:960px;margin:50px auto;border:1px solid #555;background:#fff;box-sizing:border-box}
+.wrap h1{padding:20px;background:#555;font-size:24px;color:#fff;line-height:1}
+.index_list{padding:10px 20px 20px;font-size:16px;color:#333;line-height:1.5}
+.index_list>li{margin-top:20px}
+.index_list ul{margin:10px 20px}
+.index_list ul li{height:30px;font-size:14px}
+.index_list ul li:before{display:inline-block;margin-right:10px;content:'-'}
+.index_list a:hover{text-decoration:underline}
+.week{display:block;font-weight:bold}
+</style>
 </head>
 <body>
-<!-- [D] 전페이지 공통 건너띄기 링크 제공 -->
-<ul class="skip">
-<li><a href="#header" onclick="document.getElementById('header').tabIndex=-1;document.getElementById('header').focus();return false;">주 메뉴 바로가기</a></li>
-<li><a href="#content" onclick="document.getElementById('content').tabIndex=-1;document.getElementById('content').focus();return false">본문 바로가기</a></li>
-</ul>
-<!-- //[D] 전페이지 공통 건너띄기 링크 제공 -->
-
 <div class="wrap">
-	<!--[D] HEADER -->
-	<header id="header">
-		<nav id="nav">주 메뉴 영역</nav>
-	</header>
-	<!--//[D] HEADER -->
-
-	<!-- [D] CONTENTS -->
-	<main id="content" role="main">
-	</main>
-	<!-- //[D] CONTENTS -->
-	
-	<!--[D] FOOTER -->
-	<footer id="footer">
-	</footer>
-	<!--//[D] FOOTER -->
+	<h1>JS 스터디 산출물</h1>
+	<ul class="index_list">
+	<li>
+		<span class="week">1주차 : selector</span>
+		<ul>
+		<li><a href="week1/selector_jquery.html">페이지1_jquery</a></li>
+		<li><a href="week1/selector_script.html">페이지1_script</a></li>
+		<li><a href="week1/selector2_jquery.html">페이지2_jquery</a></li>
+		<li><a href="week1/selector2_script.html">페이지2_script</a></li>
+		</ul>
+	</li>
+<!-- 	<li>
+		<span class="week">1주차 : selector</span>
+		<ul>
+		<li><a href="week1/selector_jquery.html">페이지1_jquery</a></li>
+		<li><a href="week1/selector_script.html">페이지1_script</a></li>
+		<li><a href="week1/selector2_jquery.html">페이지2_jquery</a></li>
+		<li><a href="week1/selector2_script.html">페이지2_script</a></li>
+		</ul>
+	</li> -->
+	</ul>
 </div>
-
-<!-- [D] LAYER -->
-<div class="layer"></div>
-<!-- [D] LAYER -->
 </body>
 </html>
