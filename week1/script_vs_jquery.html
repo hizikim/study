@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Javascript vs jQuery</title>
+<style>
+	html,body{height:100%}
+	body,div,h1,h2,h3,h4,h5,h6,p,table,th,td,hr{margin:0;padding:0}
+	body{background:#eee}
+	hr{border:0}
+	.table_wrap{width:960px;margin:50px auto}
+	table{table-layout:fixed;width:100%;border-collapse:collapse;border-spacing:0;font-size:14px;color:#333}
+	caption{margin:0 10px 10px;font-weight:bold;font-size:18px;text-align:left}
+	th{height:30px;border:1px solid #eee;border-width:0 10px;background:#999;color:#fff}
+	td{border:1px solid #eee;border-width:1px 10px 0;padding:10px;background:#fff;vertical-align:top}
+</style>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="table_wrap">
+			<table>
+			<caption>Javascript vs jQuery</caption>
+			<col><col>
+			<thead>
+			<tr><th scope="col">Javascript</th><th scope="col">jQuery</th></tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td>
+					웹을 구성하는 요소 중 하나로 명령형, 함수형, 프로토타입 기반의 <b>객체지향 언어</b></td>
+				<td>자주 사용되는 기능들을 쉽게 사용할 수 있도록 만들어 놓은 <b>자바스크립트의 라이브러리</b></td>
+			</tr>
+			<tr>
+				<td>각 브라우저 종류, 버전을 타는 기능을 구현할 경우, 그에 맞는 코드를 각각 구현해야 함.</td>
+				<td>모든 브라우저에서 동일한 코드 구현 가능. 브라우저 호환성 해결!</td>
+			</tr>
+			<tr>
+				<td>
+					document.aa('element')<br>
+					element.aa()<br>
+					<br>
+				 	document.getElementById('id')<br>
+				 	document.getElementsByClassName('class')<br>
+			 		document.getElementsByName(‘name attr’)<br>
+				 	document.querySelector('#id')<br>
+				 	document.querySelectorAll('tag | class | [name=foo]')<br>
+					<strong>getElementsBy* 메서드는 HTMLCollection<br>querySelector* 메서드는 Nodelist를 반환한다.</strong>
+				 	<br>
+				 	<br>
+				 	element.parentNode<br>
+				 	element.previousSibling<br>
+				 	element.previousElementSibling<br>
+				 	element.nextSibling<br>
+				 	element.nextElementSibling<br>
+				 	element.children<br>
+				 	element.firstChild<br>
+				 	element.lastChild<br>
+				 	<br>
+				 	<br>
+				 	node, children
+				 </td>
+				<td>
+					$(document).ready(function(){})<br>
+					$(element).aa()<br>
+					<br>
+					CSS에서 사용하는 개념으로 쉽게 사용 가능</td>
+			</tr>
+			<tr>
+				<td>메서드를 사용할 때 하나의 메서드를 호출하고 값을 반환한다. 여러개의 메서드를 호출해야 할 경우 순차적으로 기입해야함.<br>
+<pre>var a = document.getElementById("element");
+a.style.color = "red";
+var b = document.getElementById("element2");
+b.appendChild(a);</pre>
+				</td>
+				<td>메서드 체이닝을 통해 여러개의 메서드를 동시에 호출할 수 있음.<br>
+<pre>$("#element").css("color","red").appendTo("#element2");</pre>
+</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>애니메이션 효과, 이벤트 처리를 쉽게 사용 가능</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>다른 라이브러리들(Ajax, JSON)과 충돌을 일으키지 않는다.</td>
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+</body>
+</html>
