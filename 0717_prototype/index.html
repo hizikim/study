@@ -4,206 +4,626 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="robots" content="all">
-<title>Prototype method</title>
+<title>Prototype Method</title>
+<style type="text/css">
+	.wrap{width:1024px;margin:0 auto}
+	section{padding:30px 0;border-top:double #aaa}
+	h2{margin:0}
+	hr{margin:20px 0;padding:0;border:1px dashed #999;border-width:1px 0 0}
+	pre{overflow:hidden;background:#222;white-space:pre-wrap}
+	code{display:block;margin-left:-90px;font-size:16px;color:#fff;letter-spacing:1px;line-height:1.5}
+	code .a{font-weight:normal;color:#666}
+	dt{margin:0 0 5px 20px;font-weight:bold;font-size:18px}
+	dd:before{display:inline;content:'- '}
+	.top{position:fixed;right:30px;bottom:30px;width:50px;background:#666;color:#fff;line-height:50px;text-align:center;text-decoration:none}
+</style>
+<script type="text/javascript">
+	// Array //
+	function joinArrayFunc(){
+		var joinArray = ['JR', 'is', '3rd'];
+		var joinVar = joinArray.join(); // joinVar에 'JR,is,3rd'을 대입
+		var joinVar2 = joinArray.join(', '); // joinVar2에 'JR, is, 3rd'을 대입
+		var joinVar3 = joinArray.join(' + '); // joinVar3에 'JR + is + 3rd'을 대입
+		var joinVar4 = joinArray.join(''); // joinVar4에 'JRis3rd'을 대입
+		console.log(joinVar); // JR,is,3rd
+	};
+	function reverseArrayFunc(){
+		var reverseArray = ['one', 'two', 'three'];
+		console.log(reverseArray);
+		var reverseArray2 = reverseArray.reverse(); // 배열의 참조를 새 변수에 반환 
+		console.log(reverseArray); // 원본 배열이 변형됨
+		console.log(reverseArray2); // ['three', 'two', 'one']
+	};
+	function sortArrayFunc(){
+		var numArray = [1, 27, 2, 15, 68];
+		var numArray2 = [1, 27, 2, 15, 68];
+		console.log(numArray.sort()); // [1, 15, 2, 27, 68]
+		// 유니코드 포인트 순서에서 '10'이 '2'앞에 오기 때문에.
+		var numSortArray = numArray2.sort(function (a,b){
+			return a-b}); // 오름차순
+		console.log(numSortArray); // [1, 2, 15, 27, 68]
+
+		var fruitArray = ['cherries', 'apples', 'bananas'];
+		var fruitSortArray = fruitArray.sort(); // 배열의 참조를 새 변수에 반환 
+		// console.log(fruitArray);	// 원본 배열이 변형됨
+		console.log(fruitSortArray); // ['apples', 'bananas', 'cherries']	
+		var fruitSortArray2 = fruitArray.sort(function (a,b){
+		// return a > b ? true : false; // 오름차순
+			return a < b ? true : false; // 내림차순
+		});
+		console.log(fruitSortArray2);
+	};
+	function concatArrayFunc(){
+		var concatArray = ['a', 'b', 'c'];
+		var concatArray2 = ['x', 'y', 'z'];
+		console.log(concatArray); // ['a', 'b', 'c']
+		console.log(concatArray.concat(concatArray2)); // ['a', 'b', 'c', 'x', 'y', 'z']
+		console.log(concatArray.concat('String')); // ['a', 'b', 'c', 'String']
+		console.log(concatArray.concat(concatArray2, true)); // ['a', 'b', 'c', 'x', 'y', 'z', true]
+		console.log(concatArray); // ['a', 'b', 'c']
+	};
+	function sliceArrayFunc(){
+		var sliceArray = ['a', 'b', 'c'];
+		// sliceArray[0]부터 sliceArray[1] 이전(sliceArray[1] 미포함)까지 반환
+		var sliceCopyArray1 = sliceArray.slice(0, 1);
+		// sliceArray[1]부터 sliceArray[2] 이전(sliceArray[2] 미포함)까지 반환
+		var sliceCopyArray2 = sliceArray.slice(1, 2);
+		// sliceArray[1]부터 이후의 모든 요소 반환
+		var sliceCopyArray3 = sliceArray.slice(1);
+		// 인자가 음수인 경우 배열의 끝에서 2개의 요소를 반환
+		var sliceCopyArray4 = sliceArray.slice(-2);
+		// 모든 요소를 반환
+		var sliceCopyArray5 = sliceArray.slice();
+
+		// slice는 복사본을 반환한다. 원본은 변경되지 않는다.
+		console.log(sliceArray); // [ 'a', 'b', 'c' ]
+		console.log(sliceCopyArray1);  // [ 'a' ]
+		console.log(sliceCopyArray2);  // [ 'b' ]
+		console.log(sliceCopyArray3);  // [ 'b', 'c' ]
+		console.log(sliceCopyArray4);  // [ 'b', 'c' ]
+		console.log(sliceCopyArray5);  // [ 'a', 'b', 'c' ]
+	}
+	function spliceArrayFunc(){
+		var noodleArray = ['진라면', '참깨라면', '짜파게티', '비빔면'];
+		var noodleArray2 = ['진라면', '참깨라면', '짜파게티', '비빔면'];
+
+		// noodleArray[1]부터 2개의 요소를 제거하고 제거된 요소를 반환
+		var spliceArray = noodleArray.splice(1, 2);
+		console.log(noodleArray); // [ '진라면', '비빔면']
+		console.log(spliceArray); // [ '참깨라면', '짜파게티']
+
+		// items[1]부터 2개의 요소를 제거하고 그자리에 새로운 요소를 추가. 제거된 요소가 반환됨
+		var spliceArray2 = noodleArray2.splice(1, 2, '진짬뽕', '간짬뽕');
+		console.log(noodleArray2); // [ '진라면', '진짬뽕', '간짬뽕', '비빔면']
+		console.log(spliceArray2); // [ '참깨라면', '짜파게티']
+	};
+	function pushArrayFunc(){
+		var pushArray = ['a', 'b', 'c'];
+		var pushArray2 = ['x', 'y', 'z'];
+		var pushArray3 = pushArray.push(pushArray2, true);
+		console.log(pushArray); // ['a', 'b', 'c', ['x', 'y', 'z'], true]
+		console.log(pushArray3); // 5
+	}
+	function popArrayFunc(){
+		var popArray = ['a', 'b', 'c'];
+		var popVar1 = popArray.pop(); // 배열의 마지막 요소인 'c' 제거
+		console.log(popArray); // 원본 배열 변형
+		console.log(popVar1); // 제거한 요소 반환
+		var popVar2 = popArray.pop(); // 현재 배열의 마지막 요소인 'b' 제거
+		console.log(popVar2); // 제거한 요소 반환
+	}
+	function swiftArrayFunc(){
+		var swiftArray = [['aa', 'bb'], 1];
+		var swiftVar = swiftArray.shift();
+		console.log(swiftArray); // [1]
+		console.log(swiftVar); // ['aa', 'bb']
+		var swiftVar2 = swiftArray.shift();
+		console.log(swiftVar2); // 1
+		var swiftVar3 = swiftArray.shift();
+		console.log(swiftVar3); // undefined
+	}
+	function unswiftArrayFunc(){
+		var unswiftArray = [1, 2];
+		var unswiftVar = unswiftArray.unshift(0);
+		console.log(unswiftArray); // [0, 1, 2]
+		console.log(unswiftVar); // 3
+		unswiftArray.unshift([-3]);
+		console.log(unswiftArray); // [[-3], 0, 1, 2]
+	}
+	function toStringArrayFunc(){
+		var monthArray = ['Jan', 'Feb', 'Mar', 'Apr'];
+		var toStringArray = monthArray.toString(); // 'Jan,Feb,Mar,Apr'을 toStringArray에 할당.
+		console.log(toStringArray);
+		console.log(typeof toStringArray);
+		console.log(monthArray);
+	}
+	function indexOfArrayFunc(){
+		var indexofArray = [1, 2, 2, 3];
+		console.log(indexofArray.indexOf(1)); // 0
+		console.log(indexofArray.indexOf(2)); // 1
+		console.log(indexofArray.indexOf(4)); // -1
+	};
+	// joinArrayFunc();
+	// reverseArrayFunc();
+	// sortArrayFunc();
+	// concatArrayFunc();
+	// sliceArrayFunc();
+	// spliceArrayFunc();
+	// pushArrayFunc()
+	// popArrayFunc()
+	// swiftArrayFunc();
+	// unswiftArrayFunc();
+	// toStringArrayFunc();
+	// indexOfArrayFunc();
+</script>
+<script type="text/javascript">
+	// String //
+	function replaceStringFunc(){
+		var str = 'Hello Hello';
+		var replacedStr = str.replace('Hello', 'Kim');
+		console.log(replacedStr); // Kim Hello
+		console.log(str); // Hello Hello
+	}
+	function sliceStringFunc(){
+		var str = 'The morning is upon us.'; // 문자열 길이 : 23.
+		var sliceStr2 = str.slice(1, 8);
+		var sliceStr3 = str.slice(4, -2);
+		var sliceStr4 = str.slice(12);
+		var sliceStr5 = str.slice(30);
+		console.log(sliceStr2); // he morn
+		console.log(sliceStr3); // morning is upon u
+		console.log(sliceStr4); // is upon us.
+		console.log(sliceStr5); // ""
+	}
+	function splitStringFunc(){
+		var str = 'How are you doing?';
+		var splitStr = str.split(' ');
+		console.log(splitStr); // [ 'How', 'are', 'you', 'doing?' ]
+		splitStr = str.split();
+		console.log(splitStr); // [ 'How are you doing?' ]
+		splitStr = str.split('');
+		console.log(splitStr); // [ 'H','o','w',' ','a','r','e',' ','y','o','u',' ','d','o','i','n','g','?' ]
+		splitStr = str.split(' ', 3);
+		console.log(splitStr); // [ 'How', 'are', 'you' ]
+		splitStr = str.split('o');
+		console.log(splitStr); // [ 'H', 'w are y', 'u d', 'ing?' ]
+		console.log(str); // 원본 유지
+	}
+	function searchStringFunc(){
+		var targetString = "Is this all there is?";
+		var regexr = /is/;
+		console.log(targetString.search(regexr)); // 5
+		regexr = /is/ig; // 대소분자를 구별하지 않고 문자열 내의 모든 패턴 검색
+		console.log(targetString.search(regexr)); // 0
+	}
+	function matchStringFunc(){
+		var targetString = "Is this all there is?";
+		var regexr = /is/;
+		console.log(targetString.match(regexr)); // [ 'is', index: 5, input: 'Is this all there is?' ]
+		regexr = /is/ig; // 대소분자를 구별하지 않고 문자열 내의 모든 패턴 검색
+		console.log(targetString.match(regexr)); // [ 'Is', 'is', 'is' ]
+	}
+	function trimStringFunc(){
+		var str = "   foo  ";
+		var trimmedStr = str.trim();
+		console.log(trimmedStr); // foo
+		console.log(str); //    foo  
+	}
+	function indexOfStringFunc(){
+		var indexOfString = 'Hello World';
+		console.log(indexOfString.indexOf('l'));  // 2
+		console.log(indexOfString.indexOf('or')); // 7
+		console.log(indexOfString.indexOf('or' , 8)); // -1
+	}
+	// replaceStringFunc();
+	sliceStringFunc();
+	// splitStringFunc();
+	// searchStringFunc()
+	// matchStringFunc()
+	// trimStringFunc();
+	// searchStringFunc();
+	// matchStringFunc();
+	// indexOfStringFunc();
+</script>
+<script type="text/javascript">
+	// Object //
+	function hasOwnPropFunc(){
+		o = new Object();
+		o.prop = 'exists';
+		function changeO() {
+		  o.newprop = o.prop;
+		  delete o.prop;
+		}
+		console.log(o.hasOwnProperty('prop')); // returns true
+		changeO();
+		console.log(o.hasOwnProperty('prop')); // returns false
+		console.log(o.hasOwnProperty('newprop'));   // returns true
+	}
+	// hasOwnPropFunc();
+</script>
 </head>
 <body>
 <div class="wrap">
+<h1>Prototype Method</h1>
+<nav id="nav">
+	<ul>
+	<li><a href="#array">Array.prototype</a></li>
+	<li><a href="#string">String.prototype</a></li>
+	<li><a href="#object">Object.prototype</a></li>
+	</ul>
+</nav>
 <section>
-	<h2>Array.prototype</h2>
+	<h2 id="array">Array.prototype</h2>
 	<dl>
-	<dt>Array.join()</dt>
-	<dd>배열의 모든 요소를 연결해 하나의 문자열로 만듦.</dd>
+	<dt>Array.join([separator = ','])</dt>
+	<dd>배열의 모든 요소를 연결해 하나의 문자열로 만듦</dd>
+	<dd>기본 구분자는 <b>,</b>(comma)</dd>
+	<dd>'+' 연산자로도 하나의 문자열을 만들 수 있지만, 처리 속도가 더 빠름</dd>
 	</dl>
-	<pre>
-		<code>
-		&lt;script&gt;
-		var a = ['바람', '비', '불'];
-		var myVar1 = a.join();      // myVar1에 '바람,비,불'을 대입
-		var myVar2 = a.join(', ');  // myVar2에 '바람, 비, 불'을 대입
-		var myVar3 = a.join(' + '); // myVar3에 '바람 + 비 + 불'을 대입
-		var myVar4 = a.join('');    // myVar4에 '바람비불'을 대입
-		console.log(myVar1);
-		&lt;/script&gt;
-		</code>
-	</pre>
+	<pre><code>
+		var joinArray = ['JR', 'is', '3rd'];
+		var joinVar = joinArray.join(); <span class="a">// joinVar에 'JR,is,3rd'을 대입</span>
+		var joinVar2 = joinArray.join(', '); <span class="a">// joinVar2에 'JR, is, 3rd'을 대입</span>
+		var joinVar3 = joinArray.join(' + '); <span class="a">// joinVar3에 'JR + is + 3rd'을 대입</span>
+		var joinVar4 = joinArray.join(''); <span class="a">// joinVar4에 'JRis3rd'을 대입</span>
+		console.log(joinVar); <span class="a">// JR,is,3rd</span>
+	</code></pre>
 	<hr>
 	<dl>
 	<dt>Array.reverse()</dt>
-	<dd>배열 내 요소들의 순서를 반전시킴.</dd>
-	<dd>원본 배열이 변형됨. 배열의 참조를 반환할 수 있음</dd>
-	<script type="text/javascript">
-		var myArray = ['one', 'two', 'three'];
-		console.log(myArray);
-		var myArray2 = myArray.reverse(); // 배열의 참조를 새 변수에 반환 
-		console.log(myArray); // 원본 배열이 변형됨
-		console.log(myArray2); // ['three', 'two', 'one']
-	
-	</script>
-	<pre>
-		<code>
-		var myArray = ['one', 'two', 'three'];
-		var myArray2 = myArray.reverse(); // 배열의 참조를 새 변수에 반환 
-		
-		console.log(myArray) // ['three', 'two', 'one']
-		</code>
-	</pre>
+	<dd>배열 내 요소들의 순서를 반전시킴</dd>
+	<dd>참조된 원본 배열은 변형되고, 배열을 반환함</dd>
+	</dl>
+	<pre><code>
+		var reverseArray = ['one', 'two', 'three'];
+		console.log(reverseArray);
+		var reverseArray2 = reverseArray.reverse(); <span class="a">// 배열의 참조를 새 변수에 반환</span>
+		console.log(reverseArray); <span class="a">// 원본 배열이 변형됨</span>
+		console.log(reverseArray2); <span class="a">// ['three', 'two', 'one']</span>
+	</code></pre>
 	<hr>
 	<dl>
-	<dt>Array.sort()</dt>
-	<dd>배열의 내 요소들의 순서를 오름차순으로 정렬</dd>
-	<dd>원본 배열이 변형됨. 배열의 참조를 반환할 수 있음</dd>
-	<dd>숫자 정렬 : compare(a,b){if(areturn a-b}<br>
-	 '-' 연산자로 인자를 빼서 반환값이 0보다 큰지 작은지로 비교하기 때문. 따라서 뺄수 없으면 비교가 안된당~~~
-	</dd>
-	<dd>문자열 정렬 : compare(a,b){if(a>b)return a-b} : 숫자만 가능<br>
-	</dd>
-	<script type="text/javascript">
-		var fruit = ['cherries', 'apples', 'bananas'];
-		// console.log(fruit);
-		var fruit2 = fruit.sort(); // 배열의 참조를 새 변수에 반환 
-		// console.log(fruit);	// 원본 배열이 변형됨
-		console.log(fruit2); // ['apples', 'bananas', 'cherries']	
-		var fruitSort = fruit.sort(function (a,b){
-			if (a<b)
-				return 1;	// 순서 바뀜
-			else if (b>a)
-				return -1;	// 순서 안바뀜
-			else
-				return 0;		// a=b여도 순서 안바뀜
+	<dt>Array.sort() / Array.sort(function)</dt>
+	<dd>배열의 내 요소들의 순서를 정렬. 기본은 오름차순</dd>
+	<dd>참조된 원본 배열은 변형되고, 배열을 반환함</dd>
+	<dd>정렬의 기준은 유니코드 순서 (숫자 > 대문자 > 소문자)</dd>
+	<dd>숫자 정렬 : '-' 연산자로 인자 비교. <em>compare(a,b){return a-b}</em></dd>
+	<dd>문자열 정렬 : '<', '>' 연산자로 인자 비교. <em>compare(a,b){a < b ? true : false}</em></dd>
+	</dl>
+	<pre><code>
+		var numArray = [1, 27, 2, 15, 68];
+		var numArray2 = [1, 27, 2, 15, 68];
+		console.log(numArray.sort()); <span class="a">// [1, 15, 2, 27, 68]</span>
+		<span class="a">// 유니코드 포인트 순서에서 '10'이 '2'앞에 오기 때문에.</span>
+		var numSortArray = numArray2.sort(function (a,b){
+			return a-b}); <span class="a">// 오름차순</span>
+		console.log(numSortArray); <span class="a">// [1, 2, 15, 27, 68]</span>
+
+		var fruitArray = ['cherries', 'apples', 'bananas'];
+		    fruitSortArray = fruitArray.sort(); <span class="a">// 배열의 참조를 새 변수에 반환</span> 
+		<span class="a">// console.log(fruitArray);	// 원본 배열이 변형됨</span>
+		console.log(fruitSortArray); <span class="a">// ['apples', 'bananas', 'cherries']</span>	
+		var fruitSortArray2 = fruitArray.sort(function (a,b){
+		    <span class="a">// return a > b ? true : false;   // 오름차순</span>
+			return a < b ? true : false; <span class="a">// 내림차순</span>
 		});
-		console.log(fruitSort);
-		var num = [1, 27, 15, 68];
-		var numSort = num.sort(function (a,b){
-			return b-a}); // 내림차순
-		console.log(numSort);
-	</script>
-	<pre>
-		<code>
-		var fruit = ['cherries', 'apples', 'bananas'];
-		var fruit2 = fruit.sort(); // ['apples', 'bananas', 'cherries']
-		
-		var scores = [1, 10, 21, 2]; 
-		scores.sort(); // [1, 10, 2, 21]
-		// 10이 2,
-		// Unicode 코드 포인트 순서에서 '10'이 '2'앞에 오기 때문에.
-		
-		var things = ['word', 'Word', '1 Word', '2 Words'];
-		things.sort(); // ['1 Word', '2 Words', 'Word', 'word']
-		// 유니 코드에서 숫자는 대문자 앞에옵니다.
-		// 소문자 앞에옵니다.
-		</code>
-	</pre>
+		console.log(fruitSortArray2);
+	</code></pre>
 	<hr>
 	<dl>
-	<dt>Array.concat()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dt>Array.concat(item..)</dt>
+	<dd>인수로 넘어온 값(배열 or 값)들을 자신의 복사본 뒤에 덧붙인 새로운 배열을 반환</dd>
+	<dd>참조하는 원본 배열의 값은 유지됨</dd>
+	</dl>
+	<pre><code>
+		var concatArray = ['a', 'b', 'c'];
+		var concatArray2 = ['x', 'y', 'z'];
+
+		console.log(concatArray); <span class="a">// ['a', 'b', 'c']</span>
+		console.log(concatArray.concat(concatArray2)); <span class="a">// ['a', 'b', 'c', 'x', 'y', 'z']</span>
+		console.log(concatArray.concat('String')); <span class="a">// ['a', 'b', 'c', 'String']</span>
+		console.log(concatArray.concat(concatArray2, true)); <span class="a">// ['a', 'b', 'c', 'x', 'y', 'z', true]</span>
+		console.log(concatArray); <span class="a">// ['a', 'b', 'c']</span>
+	</code></pre>
 	<hr>
 	<dl>
-	<dt>Array.slice()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dt>Array.slice(startIndex[, endIndex])</dt>
+	<dd>배열의 특정 부분에 대한 복사본을 생성</dd>
+	<dd>반환값은 추출된 배열의 복사본</dd>
+	<dd>첫번째 매개변수 startIndex를 갖는 요소부터 매개변수 endIndex를 가진 요소 이전까지 복사됨</dd>
+	<dd>startIndex : 시작 인덱스. 음수인 경우 배열 끝에서의 인덱스를 나타냄</dd>
+	<dd>endIndex : 종료 인덱스. 4라면 3번째까지 추출함. 기본값은 length 값 (옵션)</dd>
+	</dl>
+	<pre><code>
+		var sliceArray = ['a', 'b', 'c'];
+
+		<span class="a">// sliceArray[0]부터 sliceArray[1] 이전(sliceArray[1] 미포함)까지 반환</span>
+		var sliceCopyArray1 = sliceArray.slice(0, 1);
+
+		<span class="a">// sliceArray[1]부터 sliceArray[2] 이전(sliceArray[2] 미포함)까지 반환</span>
+		var sliceCopyArray2 = sliceArray.slice(1, 2);
+
+		<span class="a">// sliceArray[1]부터 이후의 모든 요소 반환</span>
+		var sliceCopyArray3 = sliceArray.slice(1);
+
+		<span class="a">// 인자가 음수인 경우 배열의 끝에서 2개의 요소를 반환</span>
+		var sliceCopyArray4 = sliceArray.slice(-2);
+
+		<span class="a">// 모든 요소를 반환</span>
+		var sliceCopyArray5 = sliceArray.slice();
+
+		<span class="a">// slice는 복사본을 반환한다. 원본은 변경되지 않는다.</span>
+		console.log(sliceArray); <span class="a">// [ 'a', 'b', 'c' ]</span>
+
+		console.log(sliceCopyArray1); <span class="a">// [ 'a' ]</span>
+		console.log(sliceCopyArray2); <span class="a">// [ 'b' ]</span>
+		console.log(sliceCopyArray3); <span class="a">// [ 'b', 'c' ]</span>
+		console.log(sliceCopyArray4); <span class="a">// [ 'b', 'c' ]</span>
+		console.log(sliceCopyArray5); <span class="a">// [ 'a', 'b', 'c' ]</span>
+	</code></pre>
 	<hr>
 	<dl>
-	<dt>Array.splice()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dt>Array.splice(start, deleteCount[, item...])</dt>
+	<dd>기존의 배열의 내용을 추가 또는 제거하고 그 부분을 새로운 항목으로 대체</dd>
+	<dd>참조된 원본 배열은 변형되며, 삭제한 요소들을 가진 배열을 반환</dd>
+	<dd>start : 배열에서의 시작 위치이다</dd>
+	<dd>deleteCount : 시작 위치(start)부터 제거할 요소의 수</dd>
+	<dd>item : 삭제한 위치에 추가될 요소들 (옵션)</dd>
+	<dd>배열에서 요소를 추가/삭제할 때 일반적으로 쓰임</dd>
+	</dl>
+	<pre><code>
+		var noodleArray = ['진라면', '참깨라면', '짜파게티', '비빔면'];
+		var noodleArray2 = ['진라면', '참깨라면', '짜파게티', '비빔면'];
+
+		<span class="a">// noodleArray[1]부터 2개의 요소를 제거하고 제거된 요소를 반환</span>
+		var spliceArray = noodleArray.splice(1, 2);
+		console.log(noodleArray); <span class="a">// [ '진라면', '비빔면']</span>
+		console.log(spliceArray); <span class="a">// [ '참깨라면', '짜파게티']</span>
+
+		<span class="a">// items[1]부터 2개의 요소를 제거하고 그자리에 새로운 요소를 추가. 제거된 요소가 반환됨</span>
+		var spliceArray2 = noodleArray2.splice(1, 2, '진짬뽕', '간짬뽕');
+		console.log(noodleArray2); <span class="a">// [ '진라면', '진짬뽕', '간짬뽕', '비빔면']</span>
+		console.log(spliceArray); <span class="a">// [ '참깨라면', '짜파게티']</span>
+	</code></pre>
 	<hr>
 	<dl>
-	<dt>Array.push()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dt>Array.push(element..)</dt>
+	<dd>인수로 넘어온 항목을 배열의 끝에 추가</dd>
+	<dd>참조된 원본 배열은 변형되고, 반환값은 배열의 새로운 length 값</dd>
+	<dd>concat 메서드와 차이점 : 넘어온 인수 전체를 배열에 추가</dd>
+	<dd>스택 구조를 따름 (Last In First Out)</dd>
+	</dl>
+	<pre><code>
+		var pushArray = ['a', 'b', 'c'];
+		var pushArray2 = ['x', 'y', 'z'];
+		var pushVar = pushArray.push(pushArray2, true);
+		console.log(pushArray); <span class="a">// ['a', 'b', 'c', ['x', 'y', 'z'], true]</span>
+		console.log(pushVar); <span class="a">// 5</span>
+	</code></pre>
 	<hr>
 	<dl>
 	<dt>Array.pop()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dd>배열에서 마지막 요소를 제거함</dd>
+	<dd>참조된 원본 배열은 변형되고, 반환값은 제거한 요소</dd>
+	<dd>빈 배열일 경우 undefined를 반환</dd>
+	<dd>스택 구조를 따름 (Last In First Out)</dd>
+	</dl>
+	<pre><code>
+		var popArray = ['a', 'b', 'c'];
+		var popVar1 = popArray.pop(); <span class="a">// 배열의 마지막 요소인 'c' 제거</span>
+		console.log(popArray); <span class="a">// 원본 배열 변형</span>
+		console.log(popVar1); <span class="a">// 제거한 요소 반환</span>
+		var popVar2 = popArray.pop(); <span class="a">// 현재 배열의 마지막 요소인 'b' 제거</span>
+		console.log(popVar2); <span class="a">// 제거한 요소 반환</span>
+	</code></pre>
 	<hr>
 	<dl>
 	<dt>Array.shift()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dd>배열에서 첫번째 요소를 제거함</dd>
+	<dd>참조된 원본 배열은 변형되고, 반환값은 제거한 요소</dd>
+	<dd>만약 빈 배열일 경우 undefined를 반환</dd>
+	<dd>큐 구조를 따름 (First In First Out)</dd>
+	</dl>
+	<pre><code>
+		var swiftArray = [['aa', 'bb'], 1];
+		var swiftVar = swiftArray.shift();
+		console.log(swiftArray); <span class="a">// [1]</span>
+		console.log(swiftVar); <span class="a">// ['aa', 'bb']</span>
+		var swiftVar2 = swiftArray.shift();
+		console.log(swiftVar2); <span class="a">// 1</span>
+		var swiftVar3 = swiftArray.shift();
+		console.log(swiftVar3); <span class="a">// undefined</span>
+	</code></pre>
 	<hr>
 	<dl>
-	<dt>Array.unshift()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dt>Array.unshift(element..)</dt>
+	<dd>배열의 시작점에 요소들을 추가</dd>
+	<dd>참조된 원본 배열은 변형되고, 반환값은 배열의 새로운 length 값</dd>
+	<dd>만약 빈 배열일 경우 undefined를 반환</dd>
+	<dd>큐 구조를 따름 (First In First Out)</dd>
+	</dl>
+	<pre><code>
+		var unswiftArray = [1, 2];
+		var unswiftVar = unswiftArray.unshift(0);
+		console.log(unswiftArray); <span class="a">// [0, 1, 2]</span>
+		console.log(unswiftVar); <span class="a">// 3</span>
+		unswiftArray.unshift([-3]);
+		console.log(unswiftArray); <span class="a">// [[-3], 0, 1, 2]</span>
+	</code></pre>
 	<hr>
 	<dl>
 	<dt>Array.toString()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dd>지정된 배열 및 그 요소를 나타내는 문자열을 반환</dd>
+	<dd>참조된 원본 배열 값이 유지됨</dd>
+ 	<dd>배열이 텍스트 값으로 표현되거나 배열이 문자열 연결(concatenation)에 참조될 때, 자동으로 toString 메서드를 호출함</dd>
+	</dl>
+	<pre><code>
+		var monthArray = ['Jan', 'Feb', 'Mar', 'Apr'];
+		var toStringArray = monthArray.toString(); <span class="a">// 'Jan,Feb,Mar,Apr'을 하나의 문자열로 toStringArray에 할당.</span>
+		console.log(toStringArray); <a class="span">// Jan,Feb,Mar,Apr</a>
+		console.log(typeof toStringArray); <a class="span">// string</a>
+		console.log(monthArray); <a class="span">// Jan,Feb,Mar,Apr</a>
+	</code></pre>
 	<hr>
 	<dl>
-	<dt>Array.indexOf()</dt>
-	<dd></dd>
-	<pre>
-		<code>
-		</code>
-	</pre>
+	<dt>Array.indexOf(element)</dt>
+	<dd>배열에서 인수로 지정된 요소를 검색하여 인덱스를 반환</dd>
+	<dd>중복되는 요소가 있는 경우, 첫번째 인덱스만 반환</dd>
+	<dd>해당하는 요소가 없는 경우, -1을 반환</dd>
+	</dl>
+	<pre><code>
+		var indexofArray = [1, 2, 2, 3];
+		console.log(indexofArray.indexOf(1)); <span class="a">// 0</span>
+		console.log(indexofArray.indexOf(2)); <span class="a">// 1</span>
+		console.log(indexofArray.indexOf(4)); <span class="a">// -1</span>
+	</code></pre>
 </section>
 <section>
-	<h2>String.prototype</h2>
+	<h2 id="string">String.prototype</h2>
+	<p>문자열은 변경 불가능한 값(immutable value)이라 참조해도 원본이 유지됨</p>
 	<dl>
-	<dt>String.replace()</dt>
-	<dd></dd>
+	<dt>String.replace(pattern, replacement[, flags])</dt>
+	<dd>첫번째 인수를 대상 문자열에서 검색하여 두번째 인수로 대체</dd>
+	<dd>원본 문자열은 유지되며, 반환값은 대체된 문자열</dd>
+	<dd>검색된 문자열이 복수 존재할 경우 첫번째로 검색된 문자열만 대체됨</dd>
+	<dd>pattern: 검색 대상 문자열 또는 정규표현식</dd>
+	<dd>replacement: 치환 문자열</dd>
 	</dl>
+	<pre><code>
+		var str = 'Hello Hello';
+
+		var replacedStr = str.replace('Hello', 'Kim');
+		console.log(replacedStr); <span class="a">// Kim Hello</span>
+		console.log(str); <span class="a">// Hello Hello</span>
+	</code></pre>
 	<dl>
-	<dt>String.slice()</dt>
-	<dd></dd>
+	<dt>String.slice(startIndex[, endIndex])</dt>
+	<dd>문자열의 특정 부분에 대한 복사본을 생성</dd>
+	<dd>반환값은 추출된 문자열의 복사본</dd>
+	<dd>첫번째 매개변수 startIndex를 갖는 요소부터 매개변수 endIndex를 가진 요소 이전까지 복사됨</dd>
+	<dd>startIndex : 시작 인덱스.</dd>
+	<dd>endIndex : 종료 인덱스. 4라면 3번째까지 추출함. 기본값은 length 값 (옵션)</dd>
+	<dd>음수인 경우 문자열 길이+(startIndex | endIndex)로 계산. 문자열 길이가 (startIndex | endIndex)보다 작으면 빈 문자열을 반환</dd>
 	</dl>
+	</dl>
+	<pre><code>
+		var str = 'The morning is upon us.'; <span class="a">// 문자열 길이 : 23</span>
+		var sliceStr2 = str.slice(1, 8);
+		var sliceStr3 = str.slice(4, -2);
+		var sliceStr4 = str.slice(12);
+		var sliceStr5 = str.slice(30);
+		console.log(sliceStr2); <span class="a">// he morn</span>
+		console.log(sliceStr3); <span class="a">// morning is upon u</span>
+		console.log(sliceStr4); <span class="a">// is upon us.</span>
+		console.log(sliceStr5); <span class="a">// "" (빈 문자열)</span>
+	</code></pre>
 	<dl>
-	<dt>String.split()</dt>
-	<dd></dd>
+	<dt>String.split([separator[, limit]])</dt>
+	<dd>첫번째 인수로 전달된 문자열(또는 정규표현식)을 대상 문자열에서 검색하여 문자열을 구분한 후 분리함</dd>
+	<dd>원본 문자열은 유지되며, 분리된 각 문자열로 이루어진 배열을 반환</dd>
+	<dd>인수가 없는 경우, 대상 문자열 전체를 단일 요소로 하는 배열을 반환</dd>
+	<dd>separator: 구분 대상 문자열 또는 정규표현식</dd>
+	<dd>limit: 구분 대상수의 한계를 나타내는 정수</dd>
 	</dl>
+	<pre><code>
+		var str = 'How are you doing?';
+		var splitStr = str.split(' ');
+		console.log(splitStr); <span class="a">// [ 'How', 'are', 'you', 'doing?' ]</span>
+
+		splitStr = str.split();
+		console.log(splitStr); <span class="a">// [ 'How are you doing?' ]</span>
+		
+		splitStr = str.split('');
+		console.log(splitStr); <span class="a">// [ 'H','o','w',' ','a','r','e',' ','y','o','u',' ','d','o','i','n','g','?' ]</span>
+		
+		splitStr = str.split(' ', 3);
+		console.log(splitStr); <span class="a">// [ 'How', 'are', 'you' ]</span>
+		
+		splitStr = str.split('o');
+		console.log(splitStr); <span class="a">// [ 'H', 'w are y', 'u d', 'ing?' ]</span>
+		console.log(str); <span class="a">// 원본 유지</span>
+
+	</code></pre>
 	<dl>
-	<dt>String.search()</dt>
-	<dd></dd>
+	<dt>String.search(rgExp)</dt>
+	<dd>정규식을 사용하여 문자열을 검색</dd>
+	<dd>반환값은 처음으로 일치하는 문자열의 index값</dd>
+	<dd>일치하는 부분이 없으면 -1을 반환</dd>
+	<dd>rgExp : 정규식 (Regular Expression) <b>/pattern/flag</b></dd>
 	</dl>
+	<pre><code>
+		var targetString = "Is this all there is?";
+		var regexr = /is/;
+
+		console.log(targetString.match(regexr)); <span class="a">// 5</span>
+
+		regexr = /is/ig; <span class="a">// 대소분자를 구별하지 않고 문자열 내의 모든 패턴 검색</span>
+		console.log(targetString.search(regexr)); <span class="a">// 0</span>
+	</code></pre>
 	<dl>
-	<dt>String.match()</dt>
-	<dd></dd>
+	<dt>String.match(rgExp)</dt>
+	<dd>정규식을 사용하여 일치하는 문자열을 검색</dd>
+	<dd>반환값은 검색 결과를 모아놓은 배열</dd>
+	<dd>일치하는 부분이 없으면 null을 반환</dd>
+	<dd>rgExp : 정규식 (Regular Expression) <b>/pattern/flag</b></dd>
 	</dl>
+	<pre><code>
+		var targetString = "Is this all there is?";
+		var regexr = /is/;
+
+		console.log(targetString.match(regexr));
+		<span class="a">// [ 'is', index: 5, input: 'Is this all there is?' ]</span>
+
+		regexr = /is/ig; <span class="a">// 대소분자를 구별하지 않고 문자열 내의 모든 패턴 검색</span>
+		console.log(targetString.match(regexr)); <span class="a">// [ 'Is', 'is', 'is' ]</span>
+	</code></pre>
 	<dl>
 	<dt>String.trim()</dt>
-	<dd></dd>
+	<dd>문자열 양쪽 끝에 있는 공백 문자를 제거</dd>
+	<dd>원본 문자열 유지. 공백 문자를 제거한 문자열을 반환</dd>
 	</dl>
+	<pre><code>
+		var str = "   foo  ";
+		var trimmedStr = str.trim();
+		console.log(trimmedStr); <span class="a">// foo</span>
+		console.log(str); <span class="a">//    foo</span>  
+	</code></pre>
 	<dl>
-	<dt>String.indexOf()</dt>
-	<dd></dd>
+	<dt>String.indexOf(searchValue[, fromIndex])</dt>
+	<dd>문자/문자열에서 인수로 지정된 요소를 검색하여 인덱스를 반환</dd>
+	<dd>중복되는 요소가 있는 경우, 첫번째 인덱스만 반환</dd>
+	<dd>해당하는 요소가 없는 경우, -1을 반환</dd>
+	<dd>searchValue: 검색할 문자 또는 문자열</dd>
+	<dd>fromIndex : 검색 시작 index (생략할 경우, 0)</dd>
 	</dl>
+	<pre><code>
+		var indexOfString = 'Hello World';
+		console.log(indexOfString.indexOf('l')); <span class="a">// 2</span>
+		console.log(indexOfString.indexOf('or')); <span class="a">// 7</span>
+		console.log(indexOfString.indexOf('or' , 8)); <span class="a">// -1</span>
+	</code></pre>
 </section>	
 <section>	
-	<h2>Object.prototype</h2>
+	<h2 id="object">Object.prototype</h2>
 	<dl>
-	<dt>Object.hasOwnProperty()</dt>
-	<dd></dd>	
+	<dt>Object.hasOwnProperty(prop)</dt>
+	<dd>객체가 특정 프로퍼티(prop)를 가지고 있는지 여부를 확인 후 true/false를 반환</dd>	
 	</dl>
+	<pre><code>
+		o = new Object();
+		o.prop = 'exists';
+
+		function changeO() {
+		  o.newprop = o.prop;
+		  delete o.prop;
+		}
+
+		o.hasOwnProperty('prop'); <span class="a">// returns true</span>
+		changeO();
+		o.hasOwnProperty('prop'); <span class="a">// returns false</span>
+	</code></pre>
 </section>
+<a href="#nav" class="top">top</a>
 </div>
 </body>
 </html>
