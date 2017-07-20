@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<title>if</title>
+	<link rel="stylesheet" href="common.css" />
+	<script src="../@lib/jquery-1.12.4.min.js"></script>
+	<script>
+		$(function () {
+			//// 전역변수 설정
+			var wrap = $('.exam_wrap');
+			var select = function (item) {
+				item.css('background', 'yellow');
+			};	// 배경 스타일 추가하는 함수
+			var deselect = function (item) {
+				item.css('background', '');
+			};	// 배경 스타일 없애는 함수
+
+			//////Q1
+			var list1 = wrap.eq(0).find('.exam_q').find('ul').children();	// 첫번째 wrap에 있는 li
+			var nextBtn = wrap.eq(0).find('.next_btn');	// 첫번째 wrap에 있는 .next_btn
+			var curIndex1 = 0;	// 첫번째 인덱스부터 시작
+
+			// 현재 li에 배경스타일 추가하고 li의 개수만큼 인덱스가 증가하는 함수
+			var selectNext = function () {
+				console.log('select next');
+				select(list1.eq(curIndex1));	// 현재 li에 배경색 추가
+				curIndex1++;	// 인덱스 1 증가 -> 현재 li에서 다음 li로
+				// 인덱스가 li의 개수보다 크지 않게 최대 인덱스 지정
+				if (curIndex1 > list1.length)
+					curIndex1 = list1.length;
+				// curIndex1 = Math.min(curIndex1 + 1, list1.length);
+				console.log(curIndex1);
+			};
+			nextBtn.on('click', selectNext);	// 다음버튼을 클릭할 때마다 selectNext 함수 실행
+			////~Q1
+
+
+			////Q2
+			var list2 = wrap.eq(1).find('.exam_q').find('ul').children();	// 두번째 wrap에 있는 li
+			var prevBtn = wrap.eq(1).find('.prev_btn');	// 두번째 wrap에 있는 .prev_btn
+			var curIndex2 = list2.length - 1;	// 마지막 인덱스부터 시작
+
+			// 현재 li에 배경스타일 추가하고 li의 인덱스가 0일때까지 인덱스가 감소하는 함수
+			var selectPrev = function () {
+				console.log('select prev');
+				select(list2.eq(curIndex2));	// 현재 li에 배경색 추가
+				curIndex2--;	// 인덱스 1 감소 -> 현재 li에서 이전 li로
+				// 인덱스가 0보다 작지 않게 최소 인덱스 지정
+				if (curIndex2 < 0)
+					curIndex2 = 0;
+				// curIndex2 = Math.max(curIndex2 - 1, 0);
+				console.log(curIndex2);
+			};
+			prevBtn.on('click', selectPrev);	// 이전버튼을 클릭할 때마다 selectPrev 함수 실행
+			////~Q2
+
+
+			////Q3
+			var list3 = wrap.eq(2).find('.exam_q').find('ul').children();	// 세번째 wrap에 있는 li
+			var prevTglBtn = wrap.eq(2).find('.prev_btn');	// 세번째 wrap에 있는 .prev_btn
+			var nextTglBtn = wrap.eq(2).find('.next_btn');	// 세번째 wrap에 있는 .next_btn
+			var curIndex3 = 0;	// 배경색이 있는 첫번째 인덱스부터 시작
+
+			// 다음버튼을 누르면 현재 li의 배경색은 지우고 다음 li에 배경색을 추가하는 함수
+			var toggleNext = function () {
+				console.log('toggle next');
+				deselect(list3.eq(curIndex3));	// 현재 li에 배경색 제거
+				curIndex3++;	// 인덱스 1 증가 -> 현재 li에서 다음 li로
+				// 다음 li의 인덱스가 li의 개수보다 크지 않게 최대 인덱스 지정
+				if (curIndex3 > list3.length - 1)
+					curIndex3 = list3.length - 1;
+				// curIndex3 = Math.min(curIndex3 + 1, list3.length - 1);
+				console.log(curIndex3);
+				select(list3.eq(curIndex3));	// 바뀐 li에 배경색 추가 
+			};
+			// 이전버튼을 누르면 현재 li의 배경색은 지우고 이전 li에 배경색을 추가하는 함수
+			var togglePrev = function () {
+				console.log('toggle prev');
+				deselect(list3.eq(curIndex3));	// 현재 li에 배경색 제거
+				curIndex3--;	// 인덱스 1 감소 -> 현재 li에서 이전 li로
+				// 이전 li의 인덱스가 0보다 작지 않게 최소 인덱스 지정
+				if (curIndex3 < 0)
+					curIndex3 = 0;
+				// curIndex3 = Math.max(curIndex3 - 1, 0);
+				console.log(curIndex3);
+				select(list3.eq(curIndex3));	// 바뀐 li에 배경색 추가
+			};
+			prevTglBtn.on('click', togglePrev);	// 이전버튼을 클릭할 때마다 togglePrev 함수 실행
+			nextTglBtn.on('click', toggleNext);	// 다음버튼을 클릭할 때마다 toggleNext 함수 실행
+			////~Q3
+
+
+			////Q4            
+			var list4 = wrap.eq(3).find('.exam_q').find('ul').children();	// 네번째 wrap에 있는 li
+			var prevTglBtn2 = wrap.eq(3).find('.prev_btn');	// 네번째 wrap에 있는 .prev_btn
+			var nextTglBtn2 = wrap.eq(3).find('.next_btn');	// 네번째 wrap에 있는 .next_btn
+			var curIndex4 = 0;	// active 클래스가 있는 첫번째 인덱스부터 시작
+
+			//  다음버튼을 누르면 현재 li에 있는 .active가 제거되고 다음 li에 .active를 추가하는 함수 
+			var toggleNextLoop = function () {
+				console.log('toggle next loop');
+				list4.eq(curIndex4).removeClass('active');	// 현재 li에 있는 .active 제거
+				// 다음 li의 인덱스가 li의 개수를 초과한 시점에 첫번째 인덱스로 초기화
+				if (curIndex4 > list4.length - 2)
+					curIndex4 = 0;
+				// 위의 경우가 아니면 인덱스 1씩 증가
+				else
+					curIndex4++;
+				// curIndex4 = ( curIndex4 + 1 ) % list4.length;
+				console.log(curIndex4);
+				list4.eq(curIndex4).addClass('active');	// 바뀐 li에 .active 추가
+			};
+			// 이전버튼을 누르면 현재 li에 있는 .active가 제거되고 이전 li에 .active를 추가하는 함수 
+			var togglePrevLoop = function () {
+				console.log('toggle prev loop');
+				list4.eq(curIndex4).removeClass('active');	// 현재 li에 있는 .active 제거
+				// 이전 인덱스가 0보다 작으면 마지막 인덱스로 초기화
+				if (curIndex4 == 0)
+					curIndex4 = list4.length - 1;
+				// 위의 경우가 아니면 인덱스 1씩 감소
+				else
+					curIndex4--;
+				// curIndex4 = (curIndex4 == 0) ? ( list4.length - 1 ) : ( curIndex4 - 1 );
+				console.log(curIndex4);
+				list4.eq(curIndex4).addClass('active');	// 바뀐 li에 .active 추가
+			};
+			prevTglBtn2.on('click', togglePrevLoop);	// 이전버튼을 누를때마다 togglePrevLoop 실행
+			nextTglBtn2.on('click', toggleNextLoop);	// 다음버튼을 누를때마다 toggleNextLoop 실행
+			////~Q4
+		});
+	</script>
+</head>
+
+<body>
+	<!-- wrapper [s] -->
+	<div id="wrapper">
+		<!-- header [s] -->
+		<div id="header">
+		</div>
+		<!-- header [e] -->
+		<hr />
+		<!-- container [s] -->
+		<div id="container">
+			<div class="exam_wrap">
+				<h1>Q. 첫번째부터 순서대로 선택하세요 (style 제어)</h1>
+				<div class="exam_q">
+					<!-- 부모 -->
+					<ul>
+						<li>one</li>
+						<li>two</li>
+						<li>three</li>
+						<li>four</li>
+						<li>five</li>
+						<li>six</li>
+						<li>seven</li>
+						<li>eight</li>
+					</ul>
+				</div>
+				<button type="button" class="next_btn">다음</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 마지막부터 역순대로 선택하세요 (style 제어)</h1>
+				<div class="exam_q">
+					<!-- 부모 -->
+					<ul>
+						<li>one</li>
+						<li>two</li>
+						<li>three</li>
+						<li>four</li>
+						<li>five</li>
+						<li>six</li>
+						<li>seven</li>
+					</ul>
+				</div>
+				<button type="button" class="prev_btn">이전</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 첫번째부터 순서대로 선택하고, 전에 선택했던 Element의 배경색을 지우세요 (style 제어)</h1>
+				<div class="exam_q">
+					<!-- 부모 -->
+					<ul>
+						<li style="background-color: yellow">one</li>
+						<li>two</li>
+						<li>three</li>
+						<li>four</li>
+						<li>five</li>
+						<li>six</li>
+						<li>seven</li>
+						<li>eight</li>
+						<li>nine</li>
+					</ul>
+				</div>
+				<button type="button" class="prev_btn">이전</button>
+				<button type="button" class="next_btn">다음</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 첫번째부터 순서대로 선택하고, 전에 선택했던 Element의 배경색을 지우시고, 무한loop 돌게 하세요 (클래스 제어)</h1>
+				<div class="exam_q">
+					<!-- 부모 -->
+					<ul>
+						<li class="active">one</li>
+						<li>two</li>
+						<li>three</li>
+						<li>four</li>
+						<li>five</li>
+						<li>six</li>
+						<li>seven</li>
+						<li>eight</li>
+						<li>nine</li>
+					</ul>
+				</div>
+				<button type="button" class="prev_btn">이전</button>
+				<button type="button" class="next_btn">다음</button>
+			</div>
+		</div>
+		<!-- container [e] -->
+		<hr />
+		<!-- footer [s] -->
+		<div id="footer">
+		</div>
+		<!-- footer [e] -->
+	</div>
+	<!-- wrapper [e] -->
+</body>
+
+</html>
