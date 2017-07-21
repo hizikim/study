@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>for</title>
+<link rel="stylesheet" href="common.css" />
+<script src="../@lib/jquery-1.12.4.min.js"></script>
+<script>
+$(function(){
+	//// exam1 [s]
+	var exWrap1 = $('.exam_q').eq(0);
+	var exArr1 = [];	// 출력값을 담을 배열 선언
+	var exCount1 = 0;	// 반복 카운트 초기값 0
+	
+	// 카운트가 5보다 작을 때까지 1씩 증가하고 아래 문자열을 배열에 차례대로 입력 -> 총 5번 실행
+	while (exCount1 < 5){
+		exArr1.push('<div><input type="text" value="'+(exCount1+1)+'"></div>');
+		exCount1++;
+	}
+	console.log('push가 잘 됐나 확인');
+	console.dir(exArr1);
+	
+	var arrToStr1 = exArr1.join('');	// 배열 값들을 구분 문자 없이 붙여서 하나의 문자열로 만듦
+	console.log('문자열로 잘 이어졌나 확인');
+	console.log(arrToStr1);
+
+	// jQuery 요소인 exWrap1를 DOM 요소로 변환
+	var queryToDom1 = exWrap1.get(0);
+	// var queryToDom1 = exWrap1[0];
+	console.log(queryToDom1);
+	
+	// queryToDom의 HTML 태그 안에 arrToStr1 문자열을 넣어줌
+	queryToDom1.innerHTML = arrToStr1; 
+	
+	// exWrap1.get(0).innerHTML = arrToStr1;	// 이렇게 이어쓸 수도 있음
+	//// exam1 [e]
+
+	//// exam2 [s]
+	var exWrap2 = $('.exam_q').eq(1);
+	var exArr2 = [];	// 출력값을 담을 배열 선언
+	// 카운트가 5보다 작을 때까지 1씩 증가하고 아래 문자열을 배열에 차례대로 입력 -> 총 5번 실행
+	for (var exCount2=0; exCount2<5; exCount2++){
+		if (exCount2 % 2 == 0){
+			exArr2.push('<div><input type="text" value="'+(exCount2+1)+'"></div>');
+		} else{
+			exArr2.push('<div><input type="checkbox" id="chk'+(exCount2+1)+'"> <label for="chk'+(exCount2+1)+'">'+(exCount2+1)+'</label></div>');
+		}
+	}
+	console.log('push가 잘 됐나 확인');
+	console.dir(exArr2);
+	
+	var arrToStr2 = exArr2.join('');	// 배열 값들을 구분 문자 없이 붙여서 하나의 문자열로 만듦
+	console.log('문자열로 잘 이어졌나 확인');
+	console.log(arrToStr2);
+	
+	// jQuery 요소인 exWrap2를 DOM 요소로 변환
+	var queryToDom2 = exWrap2.get(0);
+	// var queryToDom2 = exWrap2[0];
+	console.log(queryToDom2);
+
+	// queryToDom의 HTML 태그 안에 arrToStr2 문자열을 넣어줌
+	queryToDom2.innerHTML = arrToStr2; 
+	
+	// exWrap2.get(0).innerHTML = arrToStr2;	// 이렇게 이어쓸 수도 있음
+	//// exam2 [e]
+
+	//// exam3 [s]
+	var exWrap3 = $('.exam_q').eq(2);
+	var exArr3 = [];	// 출력값을 담을 배열 선언
+	var lVar3 = 8;	// 좌변 변수 8로 초기화 (8단)
+	exArr3.push('<ul>');
+	// 우변 1부터 1씩 증가하며 9까지 반복
+	for (var rVar3 = 1; rVar3<10; rVar3++){
+		exArr3.push('<li>'+lVar3+' x '+rVar3+' = '+(lVar3*rVar3)+'</li>');
+	}
+	exArr3.push('</ul>');
+	console.log('push가 잘 됐나 확인');
+	console.dir(exArr3);
+	
+	var arrToStr3 = exArr3.join('');	// 배열 값들을 구분 문자 없이 붙여서 하나의 문자열로 만듦
+	console.log('문자열로 잘 이어졌나 확인');
+	console.log(arrToStr3);
+	
+	// jQuery 요소인 exWrap3를 DOM 요소로 변환
+	var queryToDom3 = exWrap3.get(0);
+	// var queryToDom3 = exWrap3[0];
+	console.log(queryToDom3);
+
+	// queryToDom의 HTML 태그 안에 arrToStr3 문자열을 넣어줌
+	queryToDom3.innerHTML = arrToStr3; 
+	
+	// exWrap3.get(0).innerHTML = arrToStr3;	// 이렇게 이어쓸 수도 있음
+	//// exam3 [e]
+
+	//// exam4 [s]
+	var exWrap4 = $('.exam_q').eq(3);
+	var exArr4 = [];	// 출력값을 담을 배열 선언
+	var lVar4 = 1;	// 좌변 변수 1로 초기화 (1단부터 시작)
+	// 좌변 9까지 1씩 증가하며 반복
+	while (lVar4 < 10){
+		exArr4.push('<ul>');
+		// 우변 1부터 1씩 증가하며 9까지 반복
+		for (var rVar4 = 1; rVar4<10; rVar4++){
+			exArr4.push('<li>'+lVar4+' x '+rVar4+' = '+(lVar4*rVar4)+'</li>');
+		}
+		exArr4.push('</ul>');
+		lVar4++;
+	}
+	console.log('push가 잘 됐나 확인');
+	console.dir(exArr4);
+	
+	var arrToStr4 = exArr4.join('');	// 배열 값들을 구분 문자 없이 붙여서 하나의 문자열로 만듦
+	console.log('문자열로 잘 이어졌나 확인');
+	console.log(arrToStr4);
+	
+	// jQuery 요소인 exWrap4를 DOM 요소로 변환
+	var queryToDom4 = exWrap4.get(0);
+	// var queryToDom4 = exWrap4[0];
+	console.log(queryToDom4);
+
+	// queryToDom의 HTML 태그 안에 arrToStr4 문자열을 넣어줌
+	queryToDom4.innerHTML = arrToStr4; 
+	
+	// exWrap4.get(0).innerHTML = arrToStr4;	// 이렇게 이어쓸 수도 있음
+	//// exam4 [e]
+});
+</script>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. while 문으로 5개의 input 을 출력하세요.</h1>
+			<div class="exam_q">
+			</div>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. for 문으로 5개의 input 을 만들되, 짝수는 text / 홀수는 checkbox 를 출력하세요.</h1>
+			<div class="exam_q">
+			</div>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. for 문으로 구구단 8단을 출력하세요.</h1>
+			<div class="exam_q">
+			</div>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. for/while 문 2개로 구구단을 출력하세요.</h1>
+			<div class="exam_q">
+			</div>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+</body>
+</html>
