@@ -40,10 +40,11 @@ $(function(){
 	var exArr2 = [];	// 출력값을 담을 배열 선언
 	// 카운트가 5보다 작을 때까지 1씩 증가하고 아래 문자열을 배열에 차례대로 입력 -> 총 5번 실행
 	for (var exCount2=0; exCount2<5; exCount2++){
-		if (exCount2 % 2 == 0){
-			exArr2.push('<div><input type="text" value="'+(exCount2+1)+'"></div>');
-		} else{
+		// 카운트가 0이면 1번째 -> 카운트가 짝수이면 홀수번째임
+		if (exCount2 % 2 == 0){	
 			exArr2.push('<div><input type="checkbox" id="chk'+(exCount2+1)+'"> <label for="chk'+(exCount2+1)+'">'+(exCount2+1)+'</label></div>');
+		} else{
+			exArr2.push('<div><input type="text" value="'+(exCount2+1)+'"></div>');
 		}
 	}
 	console.log('push가 잘 됐나 확인');
