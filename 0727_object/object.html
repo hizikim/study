@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="common.css" />
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+  <!-- header [s] -->
+  <div id="header">
+  </div>
+  <!-- header [e] -->
+  <hr />
+  <!-- container [s] -->
+  <div id="container">
+    <div class="exam_wrap">
+      <h1>Q. 함수 호출시 new 를 붙인 것과 안 붙인 것의 차이를 설명하세요.</h1>
+      <div class="exam_q">
+      <pre><code>
+        var <span class="c">obj</span> = function () {
+          console.log(<span class="b">this</span>);
+          return 10;
+        };
+        <span class="a">
+        - 해당 함수 실행
+        - 리턴값인 10을 반환
+        - obj()의 타입은 number</span>
+        <span class="c">obj();</span>   <span class="a">// Window</span>
+        console.log(<span class="c">obj();</span>)   <span class="a">// 10</span>
+        <span class="a">
+        - 객체를 새로 생성 
+        - this에 생성한 객체를 할당하고 해당 함수 실행
+        - 생성된 객체(=인스턴스)를 반환
+        - 리턴값인 10은 무시됨 
+        - new obj()의 타입은 obj</span>
+        <b>new</b> <span class="c">obj();</span>  <span class="a">// obj{}</span>
+        console.log(<b>new</b> <span class="c">obj();</span>)  <span class="a">// obj{}</span>
+      </code></pre>
+      </div>
+    </div>
+    <div class="exam_wrap">
+      <h1>Q. 객체 내에서의 this 를 설명하세요.</h1>
+      <div class="exam_q">
+      <pre><code>
+        var <span class="c">obj</span> = {
+          thisIs : <span class="b">this</span>,           
+          init : function(){
+            console.log(<span class="b">this</span>);    <span class="a">// Object(=obj)</span>
+          }
+        }
+
+        console.log(<span class="c">obj</span>.thisIs);  <span class="a">// Window</span>
+        <span class="c">obj</span>.init();
+
+        <span class="a">init 메서드 내의 this는 obj객체가 할당되고 
+        메서드가 아닌 일반 객체에서의 this는 전역 객체(최상위 객체)인 window를 나타낸다.</span>
+      </code></pre>
+      </div>
+    </div>
+    <div class="exam_wrap">
+      <h1>Q. 객체 내의 다른 메서드를 호출해보세요.</h1>
+      <div class="exam_q">
+      <pre><code>
+        var <span class="c">obj</span> = {
+           init : function () {
+              <span class="a">// this를 사용하여 obj객체의 메서드인 setElements를 호출</span>
+              <span class="b">this.setElements();</span>      
+           },
+           setElements : function () {
+              console.log('call');
+           }
+        };
+
+        <span class="c">obj</span>.init();     <span class="a">// call</span>
+      </code></pre>
+      </div>
+    </div>
+    <div class="exam_wrap">
+      <h1>Q. 객체 내에서 다른 객체의 메서드를 호출해보세요.</h1>
+      <div class="exam_q">
+        <pre><code>
+          var <span class="c">obj</span> = {
+             init : function () {
+               <span class="a">// obj2 객체를 명시해서 해당 객체의 메서드를 호출</span>
+               <span class="b">obj2.init();</span>      
+             }
+          };
+          var <span class="b">obj2</span> = {
+             init : function () {
+                console.log('call');
+             }
+          };
+
+          <span class="c">obj</span>.init();
+        </code></pre>
+      </div>
+    </div>
+    <div class="exam_wrap">
+      <h1>Q. 데이터 타입들을 모두 넣은후, 값들을 출력해보세요.</h1>
+      <div class="exam_q">
+      <pre><code>
+        var <span class="c">obj</span> = {
+           func : function () {
+              console.log('func');
+           },
+           num : 3,
+           str : 'kyhim',
+           arr : ['황금올리브','굽네오리지널','허니콤보'],
+           und : undefined,
+           nothing : null,
+           o : {
+            name : '치즈스노윙',
+            price : 16000}
+        };
+        
+        console.log(<span class="c">obj</span>.func);
+        <span class="a">// function () {
+              console.log('func');
+           }</span>
+        
+        console.log(<span class="c">obj</span>.num);
+        <span class="a">// 3</span>
+        
+        console.log(<span class="c">obj</span>.str);
+        <span class="a">// kyhim</span>
+        
+        console.log(<span class="c">obj</span>.arr);
+        <span class="a">// (3)["황금올리브", "굽네오리지널", "허니콤보"]</span>
+        
+        console.log(<span class="c">obj</span>.und);
+        <span class="a">// undefined</span>
+        
+        console.log(<span class="c">obj</span>.nothing);
+        <span class="a">// null</span>
+        
+        console.log(<span class="c">obj</span>.o);
+        <span class="a">// Object {name: "치즈스노윙", price: 16000}</span>
+      </code></pre>
+      </div>
+    </div>
+    <div class="exam_wrap">
+      <h1>Q. 객체내의 모든 속성들의 값을 배열에 저장한후, abc 순으로 sorting 하여, 'abcdefg' 문자열로 출력해보세요.</h1>
+      <div class="exam_q">예시)<br>
+      var obj = {<br>
+      &nbsp;&nbsp;&nbsp;e : 'e',<br>
+      &nbsp;&nbsp;&nbsp;d : 'd',<br>
+      &nbsp;&nbsp;&nbsp;b : 'b',<br>
+      &nbsp;&nbsp;&nbsp;g : 'g',<br>
+      &nbsp;&nbsp;&nbsp;c : 'c',<br>
+      &nbsp;&nbsp;&nbsp;f : 'f',<br>
+      &nbsp;&nbsp;&nbsp;a : 'a'<br>
+      };<br>
+      </div>
+    </div>
+    <div class="exam_wrap">
+      <h1>Q. 'bcaebe' 문자열을 hasOwnProperty 를 사용해서, {a : 1, b : 2, c : 1, e : 2} 로 변경해보세요.</h1>
+    </div>
+  </div>
+  <!-- container [e] -->
+  <hr />
+  <!-- footer [s] -->
+  <div id="footer">
+  </div>
+  <!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+</body>
+</html>
