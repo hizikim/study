@@ -62,14 +62,15 @@ $(function(){
 			// 숫자배열에서 랜덤번째 숫자를 뽑고 그 숫자를 인덱스로 지정. 숫자의 범위는 숫자배열크기만큼(12)
 			var randNum = Math.floor(Math.random() * this.numArr.length); 
 			this.resultIdx = this.numArr.splice(randNum, 1)[0];	
-
 			// 검증2. 한바퀴 돌았을 때 중복 검사
 			// 뽑은 값이 지금 선택되어 있는 값이랑 같으면
 			if(this.resultIdx === this.selectIdx){
+				console.log('TT');
 				// 다시 랜덤번째 숫자를 뽑고 그 숫자를 인덱스로 지정
 				var randNum2 = Math.floor(Math.random() * this.numArr.length);
 				this.resultIdx = this.numArr.splice(randNum2, 1, this.resultIdx)[0];	
 			}
+			console.log(this.numArr, this.selectIdx, this.resultIdx);
 			// 선택된 요소
 			this.selectIdx = this.resultIdx;
 			this.selectItem = $(this.examItem).eq(this.selectIdx);
