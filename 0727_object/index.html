@@ -154,8 +154,13 @@
           f : 'f',
           a : 'a'
         };
+        var objArr = [];
         // obj 객체의 키값(value)를 요소로 갖는 배열
-        var objArr = $.map(obj, function(val, key){return val});
+        for (var key in obj){
+          objArr[key] = obj[key];
+        }
+
+        // var objArr = $.map(obj, function(val, key){return val});
         console.log(objArr);
 
         // 배열 요소가 숫자가 아닌 문자이기 때문에 부등호로 비교 
