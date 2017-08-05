@@ -79,9 +79,9 @@ $(function(){
 			}
 			return true;
 		},
-		playGame : function(isRandom){
+		playGame : function(){
 			var idx;
-			if(isRandom){
+			if(this.isRandom){
 				var indexes = [];
 				for (var i = 0; i < this.gameItems.length; i++) {
 					if(i === this.selectIdx)
@@ -95,7 +95,7 @@ $(function(){
 				idx = this.selectIdx;
 			}
 			this.caps.eq(idx).animate({top: '100px'}, function(){
-				$(this).parent().addClass('winlane');
+				$(this).parent().addClass('winlane').fadein();
 			});
 		},
 		bindEvents : function(){
@@ -110,13 +110,14 @@ $(function(){
 		onClickFunc : function(){
 			if (this.checkEvents()){
 				this.isJoined = false;
-				this.playGame(true);
+				this.playGame();
 			}
 		}
 	};
 
 	bearEventObj.init();
-
+       // bearEventObj.isRandom = true;  // random
+	bearEventObj.isRandom = false; // no random
 });
 </script>
 </html>
