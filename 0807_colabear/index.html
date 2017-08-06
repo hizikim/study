@@ -90,11 +90,11 @@ $(function(){
 				}
 				var rand = Math.floor(Math.random() * ( this.gameItems.length - 1 ) ); 
 				idx = indexes[rand];
-			}else
-			{
+			} else {
 				idx = this.selectIdx;
 			}
-			this.caps.eq(idx).animate({top: '100px'}, function(){
+			$('html, body').delay(500).animate({scrollTop : '400'}, 400);
+			this.caps.eq(idx).delay(1000).animate({top:'100px'}, function(){
 				$(this).parent().addClass('winlane');
 			});
 		},
@@ -114,9 +114,8 @@ $(function(){
 			}
 		}
 	};
-
 	bearEventObj.init();
-       // bearEventObj.isRandom = true;  // random
+    // bearEventObj.isRandom = true;  // random
 	bearEventObj.isRandom = false; // no random
 });
 </script>
