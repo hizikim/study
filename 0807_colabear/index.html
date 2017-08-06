@@ -52,11 +52,12 @@
 $(function(){
 	var bearEventObj = {
 		init : function(){
-			this.setElement();
+			this.setElements();
 			this.bindEvents();
-			this.initElement();
+			this.initElements();
+			this.initScroll();
 		},
-		setElement : function(){
+		setElements : function(){
 			this.wrap = $('.evt_wrap');
 			this.items = this.wrap.find('.rabx');
 			this.radioBtn = this.wrap.find('input[type="radio"]');
@@ -64,9 +65,15 @@ $(function(){
 			this.gameItems = this.wrap.find('#gameLst li');
 			this.caps = this.wrap.find('.gom');
 		},
-		initElement : function(){
+		initElements : function(){
 			this.isJoined = true;
 			this.selectIdx = -1;
+			this.idx;
+		},
+		initScroll: function(){
+			setTimeout(function(){
+				scrollTo(0,0);
+			});
 		},
 		checkEvents : function(){
 			if(this.selectIdx == -1){
@@ -79,8 +86,7 @@ $(function(){
 			}
 			return true;
 		},
-		playGame : function(){
-			var idx;
+		selectItem : function(){
 			if(this.isRandom){
 				var indexes = [];
 				for (var i = 0; i < this.gameItems.length; i++) {
@@ -89,12 +95,14 @@ $(function(){
 					indexes.push(i);
 				}
 				var rand = Math.floor(Math.random() * ( this.gameItems.length - 1 ) ); 
-				idx = indexes[rand];
+				this.idx = indexes[rand];
 			} else {
-				idx = this.selectIdx;
+				this.idx = this.selectIdx;
 			}
+		},
+		animateItems : function(){
 			$('html, body').animate({scrollTop : '400'}, 400);
-			this.caps.eq(idx).delay(500).animate({top:'100px'}, function(){
+			this.caps.eq(this.idx).delay(500).animate({top:'100px'}, function(){
 				$(this).parent().addClass('winlane');
 			});
 		},
@@ -110,7 +118,8 @@ $(function(){
 		onClickFunc : function(){
 			if (this.checkEvents()){
 				this.isJoined = false;
-				this.playGame();
+				this.selectItem();
+				this.animateItems();
 			}
 		}
 	};
