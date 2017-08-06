@@ -59,7 +59,7 @@ $(function(){
 		setElement : function(){
 			this.wrap = $('.evt_wrap');
 			this.items = this.wrap.find('.rabx');
-			this.labels = this.wrap.find('label');
+			this.radioBtn = this.wrap.find('input[type="radio"]');
 			this.selectBtn = this.wrap.find('.btn_app');
 			this.gameItems = this.wrap.find('#gameLst li');
 			this.caps = this.wrap.find('.gom');
@@ -93,15 +93,15 @@ $(function(){
 			} else {
 				idx = this.selectIdx;
 			}
-			$('html, body').delay(500).animate({scrollTop : '400'}, 400);
-			this.caps.eq(idx).delay(1000).animate({top:'100px'}, function(){
+			$('html, body').animate({scrollTop : '400'}, 400);
+			this.caps.eq(idx).delay(500).animate({top:'100px'}, function(){
 				$(this).parent().addClass('winlane');
 			});
 		},
 		bindEvents : function(){
 			this.selectBtn.on('click', $.proxy(this.onClickFunc, this));
-			for (var i = 0; i < this.labels.length; i++)
-				this.labels.eq(i).on('click', i ,$.proxy(this.onSelectFunc, this));
+			for (var i = 0; i < this.radioBtn.length; i++)
+				this.radioBtn.eq(i).on('change', i ,$.proxy(this.onSelectFunc, this));
 		},
 		onSelectFunc : function(e){
 			this.selectIdx = e.data;
