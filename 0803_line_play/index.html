@@ -92,7 +92,6 @@
 <script>
 $(function(){
 	var randomObj = {
-		// a. 초기 실행 메서드
 		init : function() {
 			this.setElements();
 			this.bindEvents();
@@ -100,31 +99,28 @@ $(function(){
 			this.initArray();
 			this.randomPop();
 		},
-		// b. 요소 지정
 		setElements : function() {
 			this.examWrap = $('.js-play-wrap');
-			this.examItem = $(this.examWrap).find('.swiper-slide');
-			this.examBtn = $(this.examWrap).find('.btn_random');
+			this.examItem = this.examWrap.find('.swiper-slide');
+			this.examBtn = this.examWrap.find('.btn_random');
 			this.itemLength = this.examItem.length;
 			this.numArr = [];
 			this.selectIdx = -1;
 		},
-		// c. 화면 초기화
 		initView : function(){
-			$(this.examItem).css('display', 'none');
+			this.examItem.css('display', 'none');
 		},
-		// d. 배열 초기화
 		initArray : function() {
 			this.numArr = [];
-			// 배열에 아이템 갯수만큼 순차적으로 숫자 채워넣음 (1~12)
 			for (var i = 0; i < this.itemLength; i++) {
 				this.numArr.push(i);
 			}
+			}
 		},
-		// e. 랜덤 숫자 뽑고 그 숫자를 인덱스로 갖는 요소 선택
+		// e. 랜덤 숫자 뽑고 그 숫자를 인덱스로 갖는 요소 선택 	-> 초기 실행부분을 쪼개서 다시
 		randomPop : function() {
 			// 검증1. 더이상 뽑을 요소가 없으면 배열 초기화
-			if (0 === this.numArr.length)
+			if (!this.numArr.length)
 				this.initArray();
 
 			// 숫자배열에서 랜덤번째 숫자를 뽑고 그 숫자를 인덱스로 지정. 숫자의 범위는 숫자배열크기만큼(12)
@@ -136,12 +132,12 @@ $(function(){
 				console.log('TT');
 				// 다시 랜덤번째 숫자를 뽑고 그 숫자를 인덱스로 지정
 				var randNum2 = Math.floor(Math.random() * this.numArr.length);
-				this.resultIdx = this.numArr.splice(randNum2, 1, this.resultIdx)[0];	
+				this.resultIdx = this.numArr.splice(randNum2, 1, this.resultIdx)[0];
 			}
 			console.log(this.numArr, this.selectIdx, this.resultIdx);
 			// 선택된 요소
 			this.selectIdx = this.resultIdx;
-			this.selectItem = $(this.examItem).eq(this.selectIdx);
+			this.selectItem = this.examItem.eq(this.selectIdx);
 			// 선택된 요소를 화면에 보이게 해줘 
 			this.viewFunc();
 		},
@@ -155,7 +151,7 @@ $(function(){
 		},
 		// 클릭할 때 동작
 		onClickFunc : function() {
-			$(this.selectItem).css('display', 'none');	// 이전요소 스타일 초기화
+			this.selectItem.css('display', 'none');	// 이전요소 스타일 초기화
 			this.randomPop();
 			this.viewFunc();
 		}

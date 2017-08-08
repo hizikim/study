@@ -618,7 +618,8 @@
 		  delete o.prop;
 		}
 
-		o.hasOwnProperty('prop'); <span class="a">// returns true</span>
+		o.hasOwnProperty('prop'); <span class="a">// returns true, IE9부터 지원</span>
+		var obj = o.hasOwnProperty('prop'); // 전체 지원 * 다시 체크해볼것
 		changeO();
 		o.hasOwnProperty('prop'); <span class="a">// returns false</span>
 	</code></pre>

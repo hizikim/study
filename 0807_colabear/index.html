@@ -76,7 +76,7 @@ $(function(){
 			});
 		},
 		checkEvents : function(){
-			if(this.selectIdx == -1){
+			if(this.selectIdx === -1){
 				alert('곰을 선택해주세요.');
 				return false;
 			}
@@ -90,9 +90,11 @@ $(function(){
 			if(this.isRandom){
 				var indexes = [];
 				for (var i = 0; i < this.gameItems.length; i++) {
-					if(i === this.selectIdx)
+					if(i === this.selectIdx){
 						continue;
+					}
 					indexes.push(i);
+					console.log(indexes);
 				}
 				var rand = Math.floor(Math.random() * ( this.gameItems.length - 1 ) ); 
 				this.idx = indexes[rand];
@@ -124,8 +126,8 @@ $(function(){
 		}
 	};
 	bearEventObj.init();
-    // bearEventObj.isRandom = true;  // random
-	bearEventObj.isRandom = false; // no random
+    bearEventObj.isRandom = true;  // random
+	// bearEventObj.isRandom = false; // no random
 });
 </script>
 </html>
