@@ -73,19 +73,18 @@ button::-moz-focus-inner{padding:0;border:0}
 		},
 		initLayout : function(){
 			this.layerWrap.hide();
-			this.layerContent.attr('tabindex', '0');
+		},
+		insertTag : function(){
+			var spanTag = '<span tabindex="0" style="position:absolute;top:0;width:1px;height:1px;font-size:1px"></span>';
+			this.beforeTag = this.layerContent.before(spanTag).prev();
+			this.afterTag = this.layerContent.after(spanTag).next();
+			this.beforeTag.on('focusin', $.proxy(this.focusToLast, this));
+			this.afterTag.on('focusin', $.proxy(this.focusToFirst, this));
 		},
 		bindEvents : function(){
 			this.layerOpenBtn.on('click', $.proxy(this.onLayerOpenFunc, this));
 			this.layerCloseBtn.on('click', $.proxy(this.onLayerCloseFunc, this));
 			this.layerWrap.on('click', $.proxy(this.onOutsideFunc, this));
-		},
-		insertTag : function(){
-			 var spanTag = '<span tabindex="0" style="position:absolute;top:0;width:1px;height:1px;font-size:1px"></span>';
-			this.beforeTag = this.layerContent.before(spanTag).prev();
-			this.afterTag = this.layerContent.after(spanTag).next();
-			this.beforeTag.on('focusin', $.proxy(this.focusToLast, this));
-			this.afterTag.on('focusin', $.proxy(this.focusToFirst, this));
 		},
 		onOutsideFunc : function(){
 			this.layerContent.on('clickoutside', $.proxy(this.onLayerCloseFunc, this));
@@ -93,15 +92,17 @@ button::-moz-focus-inner{padding:0;border:0}
 		onLayerOpenFunc : function(e){
 			this.targetBtn = $(e.currentTarget);
 			this.layerWrap.show();
+			this.layerContent.attr('tabindex', '0');
 			this.insertTag();
 			this.focusToFirst();
 			setTimeout($.proxy(this.onOutsideFunc, this), 1);
 		},
 		onLayerCloseFunc : function(){
 			this.layerWrap.hide();
+			this.layerContent.removeAttr('tabindex');
+			this.layerContent.off('clickoutside');
 			this.beforeTag.remove();
 			this.afterTag.remove();
-			this.layerContent.off('clickoutside');
 			this.targetBtn.focus();
 		},
 		focusToFirst : function(){
@@ -109,7 +110,6 @@ button::-moz-focus-inner{padding:0;border:0}
 		},
 		focusToLast : function(){
 			this.layerCloseBtn.focus();
-			
 		}
 	}
 	layerPop.init();
