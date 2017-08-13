@@ -74,7 +74,7 @@
             this.tabItems.eq(index).addClass('active');
             this.contItems.eq(index).addClass('active');
             
-            switch (this.opts.slideMotion) {
+            switch (this.opts.changeMotion) {
                 case 'fade':
                     this.contItems.eq(this.selectIdx).fadeOut(this.opts.fadeSpeed, $.proxy(function () {
                         this.contItems.eq(index).fadeIn(this.opts.fadeSpeed);
