@@ -56,7 +56,6 @@ button::-moz-focus-inner{padding:0;border:0}
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
 <script src="../@lib/jquery-1.12.4.min.js"></script>
-<script src="../@lib/jquery.ba-outside-events.min.js"></script>
 <script>
 (function (win, $) {
 	var layerPop = {
@@ -84,9 +83,12 @@ button::-moz-focus-inner{padding:0;border:0}
 		bindEvents : function(){
 			this.layerOpenBtn.on('click', $.proxy(this.onLayerOpenFunc, this));
 			this.layerCloseBtn.on('click', $.proxy(this.onLayerCloseFunc, this));
+			this.layerWrap.on('click', $.proxy(this.onOutsideFunc, this));
 		},
-		onOutsideFunc : function(){
-			this.layerContent.on('clickoutside', $.proxy(this.onLayerCloseFunc, this));
+		onOutsideFunc : function(e){
+			if (!this.layerContent.is(e.target) && !this.layerContent.has(e.target).length){
+				this.onLayerCloseFunc();
+			}
 		},
 		onLayerOpenFunc : function(e){
 			this.targetBtn = $(e.currentTarget);
@@ -94,12 +96,10 @@ button::-moz-focus-inner{padding:0;border:0}
 			this.layerContent.attr('tabindex', '0');
 			this.insertTag();
 			this.focusToFirst();
-			setTimeout($.proxy(this.onOutsideFunc, this), 1);
 		},
 		onLayerCloseFunc : function(){
 			this.layerWrap.hide();
 			this.layerContent.removeAttr('tabindex');
-			this.layerContent.off('clickoutside');
 			this.beforeTag.remove();
 			this.afterTag.remove();
 			this.targetBtn.focus();
