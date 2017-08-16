@@ -13,7 +13,7 @@ ul,li{list-style:none}
 button{font-size:14px;font-family:"나눔고딕",NanumGothic,"굴림",Gulim,Sans-serif;line-height:1.5;cursor:pointer}
 button::-moz-focus-inner{padding:0;border:0}
 p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-size:20px}
-#container{width:880px;margin:0 auto;padding:50px 0}
+#container{width:880px;margin:0 auto;padding:50px 20px}
 .box{margin-top:50px;font-size:0}
 .box a{color:#da0707;text-decoration:none}
 .box:first-child{margin-top:0}
@@ -28,12 +28,13 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
 .ipt_chk:focus + .chk_box,.ipt_rdo:focus + .rdo_box{outline:#00FF00 dotted thick}
 .select_box{position:relative;width:200px}
 .select_box>a{display:block;border:1px solid #da0707;padding:5px 10px;font-size:16px}
-.select_box ul{position:absolute;top:100%;left:0;right:0;border:1px solid #da0707;border-width:0 1px;background:#fff}
+.select_box ul{display:none;position:absolute;top:100%;left:0;right:0;border:1px solid #da0707;border-width:0 1px;background:#fff}
 .select_box li{border-bottom:1px solid #da0707}
 .select_box li a{display:block;padding:5px 10px;font-size:16px}
 .select_menu{position:relative}
 .select_menu:after{position:absolute;top:14px;right:15px;width:0;height:0;border-top:5px solid red;border-bottom:0 solid transparent;border-right:5px solid transparent;border-left:5px solid  transparent;content:''}
 .select_box.opened{z-index:30}
+.select_box.opened ul{display:block}
 .select_box.opened .select_menu:after{top:14px;border-top:0 solid transparent;border-bottom:5px solid red}
 .box2 label{position:relative;padding-left:28px;font-size:16px;line-height:18px}
 .radio_box{display:inline-block;position:relative;margin-right:10px}
@@ -75,7 +76,7 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
         </div>
         <div class="box box3">
             <p>3. 셀렉트박스</p>
-            <div class="select_box opened">
+            <div class="select_box">
                 <a href="javascript:;" class="select_menu">선택</a>
                 <ul>
                 <li><a href="#">메뉴 1</a></li>
@@ -94,11 +95,136 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
 <script src="js/libs/jquery-1.12.4.min.js"></script>
-<script src="js/libs/jquery.ba-outside-events.min.js"></script>
+<script src="js/apps/common.js"></script>
 <script>
 (function (win, $) {
     'use strict';
+    win.project0817.common = win.project0817.common || {};
+
+    var UTIL = win.project0817.common.util;
+
+    // prototype 호출구문
+    win.project0817.checkedFunc = function (container, args) {
+        var defParams = {
+            checklabel : 'label',
+            activeClass : 'chk_active'
+        };
+        this.obj = container;
+        this.opts = UTIL.def(defParams, (args || {}));
+        this.init();
+    };
+    win.project0817.selectFunc = function (container) {
+        this.obj = container;
+        this.init();
+    };
+    // prototype 선언구문
+    win.project0817.checkedFunc.prototype = {
+        init : function () {
+            this.setElements();
+            this.initLayout();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.checkView = this.obj.find(this.opts.checkView);
+            this.checkInput = this.checkView.find('input');
+            this.checklabel = this.obj.find(this.opts.checklabel);
+        },
+        initLayout : function () {
+            this.activeClass = this.opts.activeClass;
+            this.checkInput.filter(':checked').closest(this.checkView).addClass(this.activeClass);
+            this.checkInput.filter(':not(:checked)').closest(this.checkView).removeClass(this.activeClass);
+        },
+        bindEvents : function () {
+            this.checkInput.on('change', $.proxy(this.onChangeFunc, this));
+        },
+        onChangeFunc : function (e) {
+            var target = $(e.currenttarget);
+            this.inputName = target.attr('name');
+            if (this.opts.type === 'checkbox') {
+                target.closest(this.checkView).toggleClass(this.activeClass, target.prop('checked'));
+            } else if (this.opts.type === 'radio') {
+                this.nameCheckFunc();
+            }
+        },
+        nameCheckFunc : function () {
+            var _this = this;
+            this.checkInput.filter(function () {
+                var target = $(this),
+                    targetName = target.attr('name');
+                if (_this.inputName === targetName) {
+                    target.closest(this.checkView).toggleClass(this.activeClass, target.prop('checked'));
+                }
+            });
+        }
+    };
+    win.project0817.selectFunc.prototype = {
+        init : function () {
+            this.setElements();
+            this.initLayout();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.selectBtn = this.obj.find('.select_menu');
+            this.selectOpt = this.obj.find('>ul');
+            this.selectOptItem = this.selectOpt.find('a');
+        },
+        initLayout : function () {
+            this.activeClass = 'opened';
+            this.activeFlag = false;
+        },
+        bindEvents : function () {
+            this.selectBtn.on('click', $.proxy(this.onClickFunc, this));
+            this.selectOptItem.on('click', $.proxy(this.onSelectFunc, this));
+            $(document).on('click', $.proxy(this.onOutsideFunc, this));
+        },
+        onClickFunc : function (e) {
+            var target = $(e.currentTarget);
+            this.onOptionClose();
+        },
+        onSelectFunc : function (e) {
+            e.preventDefault();
+            var target = $(e.currentTarget),
+                targetVal = target.text();
+            this.selectBtn.text(targetVal);
+            this.onOptionClose();
+        },
+        onOutsideFunc : function (e) {
+            if (!this.obj.is(e.target) && !this.obj.has(e.target).length && this.activeFlag){
+				this.onOptionClose();
+			}
+        },
+        onOptionClose : function () {
+            this.obj.toggleClass(this.activeClass, !this.activeFlag);
+            this.activeFlag = !this.activeFlag;
+        }
+    };
+    $.fn.checkedPlugin = function (args) {
+        var lengthReturns = [];
+        for (var i = 0, max = $(this).length; i < max; i++) {
+            var _this = $(this).eq(i);
+            lengthReturns.push(new win.project0817.checkedFunc(_this, args));
+        }
+        return lengthReturns;
+    };
+    $.fn.selectPlugin = function (args) {
+        var lengthReturns = [];
+        for (var i = 0, max = $(this).length; i < max; i++) {
+            var _this = $(this).eq(i);
+            lengthReturns.push(new win.project0817.selectFunc(_this, args));
+        }
+        return lengthReturns;
+    };
+
     $(function () {
+        $('.box1').checkedPlugin({
+            type : 'checkbox',
+            checkView : '.check_box',
+        });
+        $('.box2').checkedPlugin({
+            type : 'radio',
+            checkView : '.radio_box',
+        });
+        $('.select_box').selectPlugin({});
     });
 })(window, window.jQuery);
 </script>
