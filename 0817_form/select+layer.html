@@ -41,6 +41,10 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
 .rdo_box{position:absolute;left:0;width:18px;height:18px;margin-top:2px;background:url(img/sp_radio.png) no-repeat;background-position:0 0;vertical-align:middle}
 .chk_active .rdo_box{background-position:-20px 0}
 .ipt_rdo:checked + .rdo_box{background-position:-20px 0}
+.layer_area{display:none;position:fixed;left:0;top:0;right:0;bottom:0;width:100%;height:100%}
+.layer_area .layer_dimmed{position:absolute;left:0;top:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.3;filter:alpha(opacity=30);}
+.layer_pos{position:absolute;left:50%;top:50%;width:400px;height:400px;margin:-220px 0 0 -220px;padding:20px;background:#fff}
+.layer_close{position:absolute;right:20px;top:20px}
 /* //temporary css */
 </style>
 </head>
@@ -86,6 +90,19 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
                 </ul>
             </div>
         </div>
+		<div class="layer_area js-layer_area">
+			<span class="layer_dimmed">&nbsp;</span>
+			<div class="layer_pos" style="display:block">
+				<ul>
+					<li>내용1<a href="#">링크</a></li>
+					<li>내용2</li>
+					<li>내용3</li>
+					<li>내용4</li>
+					<li>내용5</li>
+				</ul>
+				<p class="layer_close"><button>닫기</button></p>
+			</div>
+		</div>
     </div>
     <!-- container [e] -->
     <hr />
@@ -167,6 +184,8 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
             this.selectBtn = this.obj.find('.select_menu');
             this.selectOpt = this.obj.find('>ul');
             this.selectOptItem = this.selectOpt.find('a');
+            this.layerWrap = $('.js-layer_area');
+			this.layerContent = this.layerWrap.find('.layer_pos');
         },
         initLayout : function () {
             this.activeClass = 'opened';
@@ -174,24 +193,36 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
         },
         bindEvents : function () {
             this.selectBtn.on('click', $.proxy(this.onOptionClose, this));
-            this.selectOptItem.on('click', $.proxy(this.onSelectFunc, this));
+            this.selectOptItem.on('click', $.proxy(this.onLayerOpenFunc, this));
             $(document).on('click', $.proxy(this.onOutsideFunc, this));
+			this.layerWrap.on('click', $.proxy(this.onOutsideFunc2, this))
+        },
+        onOptionClose : function () {
+            this.obj.toggleClass(this.activeClass, !this.activeFlag);
+            this.activeFlag = !this.activeFlag;
         },
         onSelectFunc : function (e) {
             e.preventDefault();
             var target = $(e.currentTarget),
                 targetVal = target.text();
             this.selectBtn.text(targetVal);
-            this.onOptionClose();
         },
+		onLayerOpenFunc : function(){
+			this.layerWrap.show();
+		},
+        onLayerCloseFunc : function(){
+			this.layerWrap.hide();
+		},
         onOutsideFunc : function (e) {
             if (!this.obj.is(e.target) && !this.obj.has(e.target).length && this.activeFlag){
 				this.onOptionClose();
 			}
         },
-        onOptionClose : function () {
-            this.obj.toggleClass(this.activeClass, !this.activeFlag);
-            this.activeFlag = !this.activeFlag;
+        onOutsideFunc2 : function (e) {
+            e.stopPropagation();
+            if (!this.layerContent.is(e.target) && !this.layerContent.has(e.target).length){
+				this.onLayerCloseFunc();
+			}
         }
     };
     $.fn.checkedPlugin = function (args) {
@@ -222,6 +253,7 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
         });
         $('.select_box').selectPlugin({});
     });
+
 })(window, window.jQuery);
 </script>
 </div>
