@@ -35,9 +35,9 @@ th,td{height:50px;text-align:center}
         <table>
         <thead>
         <tr>
-        <th>번호<button type="button" class="btn_sort">정렬</button></th>
-        <th>제목<button type="button" class="btn_sort">정렬</button></th>
-        <th>작성자<button type="button" class="btn_sort">정렬</button></th>
+        <th>번호<button type="button" class="btn_sort jq_sort_num">정렬</button></th>
+        <th>제목<button type="button" class="btn_sort jq_sort_title">정렬</button></th>
+        <th>작성자<button type="button" class="btn_sort jq_sort_name">정렬</button></th>
         </tr>
         </thead>
         <tbody>
@@ -71,11 +71,70 @@ th,td{height:50px;text-align:center}
     <!-- footer [e] -->
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
-<script src="../js/libs/jquery-1.12.4.min.js"></script>
+<script src="js/libs/jquery-1.12.4.min.js"></script>
 <script>
 (function (win, $) {
     'use strict';
+    var sortTable = {
+        init : function () {
+            this.setElements();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.dataTable = $('table');
+            this.dataGroup = this.dataTable.find('tbody');
+            this.dataRows = this.dataGroup.children();
+            this.data = this.dataRows.children();
+            this.sortNumBtn = this.dataTable.find('.jq_sort_num');
+            this.sortTitleBtn = this.dataTable.find('.jq_sort_title');
+            this.sortNameBtn = this.dataTable.find('.jq_sort_name');
+        },
+        bindEvents : function () {
+            this.sortNumBtn.on('click', $.proxy(this.onSortNumFunc, this));
+            this.sortTitleBtn.on('click', $.proxy(this.onSortTitleFunc, this));
+            this.sortNameBtn.on('click', $.proxy(this.onSortNameFunc, this));
+        },
+        sortDatas : function (arg) {
+            var dataMap = this.dataRows.map(function () {
+                var data = $('td', this),
+                    dataObj = {
+                        num : data.eq(0).text(),
+                        title : data.eq(1).text(),
+                        name : data.eq(2).text()
+                    };
+                return dataObj[arg];
+            });
+            this.dataArray = $.makeArray(dataMap),
+            this.sortArray = this.dataArray.slice(0).sort(function (a, b) {return a > b ? true : false});
+        },
+        changeView : function () {
+            var indexArray = [];
+            for (var i = 0, imax = this.sortArray.length; i < imax; i++){
+                for (var j = 0, jmax = this.dataArray.length; j < jmax; j++) {
+                    if (this.sortArray[i] === this.dataArray[j]) {
+                        indexArray.push(j);
+                    }
+                }
+            }
+            for (var i = 0, imax = indexArray.length; i < imax; i++){
+                this.dataGroup.children().last().after(this.dataRows.eq(indexArray[i]));
+            }
+        },
+        onSortNumFunc : function () {
+            this.sortDatas('num');
+            this.changeView();
+        },
+        onSortTitleFunc : function () {
+            this.sortDatas('title');
+            this.changeView();
+        },
+        onSortNameFunc : function () {
+            this.sortDatas('name');
+            this.changeView();
+        }
+    };
     $(function () {
+        sortTable.init();
     });
 })(window, window.jQuery);
 </script>
