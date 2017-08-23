@@ -764,7 +764,9 @@ ins{text-decoration:none}
         }
     };
     win.lfmall.topBtn = function (container, args) {
-        var defParams = {};
+        var defParams = {
+            fadeSpeed : 200
+        };
         this.obj = $(container);
         this.opts = UTIL.def(defParams, (args || {}));
         this.init();
@@ -793,7 +795,11 @@ ins{text-decoration:none}
         onScrollFunc : function () {
             var winTopCoords = $(win).scrollTop();
             var winBottomCoords = $(document).height() - winTopCoords - $(win).height();
-            this.obj.toggle((winTopCoords > this.headerHeight) && (winBottomCoords > this.footerHeight));
+            if ((winTopCoords >= this.headerHeight) && (winBottomCoords > this.footerHeight)) {
+                this.obj.fadeIn(this.opts.fadeSpeed);
+            } else {
+                this.obj.fadeOut(this.opts.fadeSpeed);
+            }
         }
     };
     $(function () {
