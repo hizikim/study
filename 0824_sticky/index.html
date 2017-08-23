@@ -721,16 +721,86 @@ ins{text-decoration:none}
 <script>
 (function (win, $) {
     'use strict';
-    win.lfmall.common = win.lfmall.common || {};
 
+    win.lfmall.common = win.lfmall.common || {};
     var UTIL = win.lfmall.common.util;
 
-    
-
-
-    
-
+    win.lfmall.sticky = function (container, args) {
+        var defParams = {};
+        this.obj = $(container);
+        this.opts = UTIL.def(defParams, (args || {}));
+        this.init();
+    };
+    win.lfmall.sticky.prototype = {
+        init : function () {
+            this.initLayout();
+            this.bindEvents();
+            this.getCoordinates();
+        },
+        initLayout : function () {
+            var objWrapClass = 'js-' + this.obj.attr('class') + '-wrapper';
+            this.obj.wrap('<div class="' + objWrapClass + '">');
+            this.objWrap = this.obj.parent();
+            this.objHeight = this.obj.outerHeight(true);
+            this.objWrap.css('height', this.objHeight);
+        },
+        getCoordinates : function () {
+            this.objOffsetTop = this.obj.offset().top;
+        },
+        bindEvents : function () { 
+            $(win).on('scroll', $.proxy(this.onScrollFunc, this));
+        },
+        onScrollFunc : function () {
+            var winTopCoords = $(win).scrollTop();
+            if (winTopCoords >= this.objOffsetTop) {
+                if (!this.obj.hasClass(this.opts.activeClass)) {
+                    this.obj.addClass(this.opts.activeClass);
+                }
+            } else {
+                if (this.obj.hasClass(this.opts.activeClass)) {
+                    this.obj.removeClass(this.opts.activeClass);
+                }
+            }
+        }
+    };
+    win.lfmall.topBtn = function (container, args) {
+        var defParams = {};
+        this.obj = $(container);
+        this.opts = UTIL.def(defParams, (args || {}));
+        this.init();
+    };
+    win.lfmall.topBtn.prototype = {
+        init : function () {
+            this.setElements();
+            this.initLayout();
+            this.bindEvents();
+            this.getCoordinates();
+        },
+        setElements : function () {
+            this.header = $('#header');
+            this.footer = $('#footer');
+        },
+        initLayout : function () {
+            this.obj.hide();
+        },
+        getCoordinates : function () {
+            this.headerHeight = this.header.outerHeight(true);
+            this.footerHeight = this.footer.outerHeight(true);
+        },
+        bindEvents : function () { 
+            $(win).on('scroll', $.proxy(this.onScrollFunc, this));
+        },
+        onScrollFunc : function () {
+            var winTopCoords = $(win).scrollTop();
+            var winBottomCoords = $(document).height() - winTopCoords - $(win).height();
+            this.obj.toggle((winTopCoords > this.headerHeight) && (winBottomCoords > this.footerHeight));
+        }
+    };
     $(function () {
+        var categorySticky = new win.lfmall.sticky('.filter_sort_wrap', {
+            activeClass : 'sticky'
+        });
+        var commonTopBtn = new win.lfmall.topBtn('.btn_top');        
     });
 })(window, window.jQuery);
 </script>
