@@ -111,10 +111,17 @@ ins{text-decoration:none}
     win.battleGround.common = win.battleGround.common || {};
     var UTIL = win.battleGround.common.util;
 
-    win.battleGround.quickNav = function (container, args) {
-        var defParams = {};
-        this.obj = $(container);
+    win.battleGround.quickNav = function (args) {
+        var defParams = {
+            quickWrap : '.quick_menu',
+            quick : '.quick_list',
+            btnTop : '.btn_top',
+            activeClass : 'active',
+            fixedClass : 'quick_fixed',
+            fixCoord : 41
+        };
         this.opts = UTIL.def(defParams, (args || {}));
+        this.obj = $(this.opts.quickWrap);
         this.init();
     };
     win.battleGround.quickNav.prototype = {
@@ -124,17 +131,48 @@ ins{text-decoration:none}
             this.getCoordinates();
         },
         setElements : function () {
-
+            this.quick = this.obj.find(this.opts.quick);
+            this.quickItems = this.quick.children().find('a').filter(function () {
+                var target = $(this),
+                    targetHref = target.attr('href');
+                if (!$(targetHref).length) {
+                    return false;
+                }
+                return true;
+            });
+            this.topBtn = this.obj.find(this.opts.btnTop);
+            this.activeIndex = null;
+            this.currentIndex;
         },
         getCoordinates : function () {
-            this.secondSectionTop = $('.section.type2').offset().top;
+            this.offsetTopArray = [];
+            for (var i = 0, max = this.quickItems.length; i < max; i++) {
+                var target = $(this.quickItems.eq(i).attr('href'));
+                this.offsetTopArray.push(target.offset().top);
+            }
         },
         bindEvents : function () {
+            this.topBtn.on('click', $.proxy(this.moveToTop, this));
+            this.quickItems.on('click', $.proxy(this.moveToSection, this));
             $(win).on('scroll', $.proxy(this.onScrollFunc, this));
         },
-        onScrollFunc : function () {
+        moveToTop : function (e) {
+            e.preventDefault();
+            $('html, body').stop().animate({
+                scrollTop : 0
+            });
+        },
+        moveToSection : function (e) {
+            e.preventDefault();
+            var target = $(e.currentTarget);
+            this.currentIndex = this.quickItems.index(target);
+            $('html, body').stop().animate({
+                scrollTop : this.offsetTopArray[this.currentIndex]
+            });
+        },
+        fixedMenu : function () {
             var winTopCoords = $(win).scrollTop();
-            if (winTopCoords >= this.secondSectionTop) {        
+            if (winTopCoords >= this.offsetTopArray[0]) {        
                 this.obj.css({'position':'fixed', 'top':this.opts.fixCoord+'px'});
             } else {
                 if (this.obj.css('position', 'fixed').length) {
@@ -142,15 +180,34 @@ ins{text-decoration:none}
                 }
             }
         },
-        onClickFunc : function () {
-
+        onScrollFunc : function () {
+            this.fixedMenu();
+            win.clearTimeout(this.scrollEndTime);
+            this.scrollEndTime = win.setTimeout($.proxy(this.offScrollFunc, this), 50);
         },
-    }
+        offScrollFunc : function () {
+            var winTopCoords = $(win).scrollTop();
+            for (var i = 0, max = this.offsetTopArray.length; i < max; i++) {
+                if (winTopCoords >= this.offsetTopArray[i]) {
+                    this.activeIndex = i;
+                } else if (winTopCoords < this.offsetTopArray[0]) {
+                    this.activeIndex = null;
+                }
+            }
+            this.skipSection();
+        },
+        skipSection : function () {
+            if (this.activeIndex === null) {
+                this.quickItems.removeClass(this.opts.activeClass);
+            } else {
+                this.quickItems.removeClass(this.opts.activeClass);
+                this.quickItems.eq(this.activeIndex).addClass(this.opts.activeClass);
+            }
+        }
+    };
 
     $(function () {
-        var quickCommonNav = new win.battleGround.quickNav('.quick_menu', {
-            fixCoord : 41
-        });
+        var quickCommonNav = new win.battleGround.quickNav();
     });
 })(window, document, window.jQuery);
 </script>
