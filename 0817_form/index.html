@@ -138,7 +138,7 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
             this.checkInput.on('change', $.proxy(this.onChangeFunc, this));
         },
         onChangeFunc : function (e) {
-            var target = $(e.currenttarget);
+            var target = $(e.currentTarget);
             this.inputName = target.attr('name');
             if (this.opts.type === 'checkbox') {
                 target.closest(this.checkView).toggleClass(this.activeClass, target.prop('checked'));
